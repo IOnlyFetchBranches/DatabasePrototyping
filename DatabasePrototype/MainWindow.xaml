@@ -1,0 +1,127 @@
+﻿<Window x:Class="DatabasePrototype.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabasePrototype"
+        mc:Ignorable="d"
+        Title="Prototype" Height="700" Width="700">
+    <Grid>
+        <Label Content="WALLYWORLD" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36"/>
+        <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top">
+            <TabItem Height="75" Name="TabStores">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Stores</Label>
+                    </StackPanel>
+                </TabItem.Header>
+                <!--This is the beginning of the actual content for a tabitem-->
+                
+                <!--Please keep an effective naming scheme for controls!-->
+                <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
+                <Grid Name="StoresGrid">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="StoresTabControl">
+                        <TabItem Name="StoresHomeTab">
+                            <TabItem.Header>
+                                <Label>Home</Label>
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
+                    
+                </Grid>
+                
+                
+            </TabItem>
+
+            <TabItem Height="75" Name="TabEmployees">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Employees</Label>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!--Please keep an effective naming scheme for controls!-->
+                <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
+                <Grid Name="GridEmployess">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="EmployeesTabControl">
+                        <TabItem Name="EmployeesHomeTab">
+                            <TabItem.Header>
+                                <Label>Home</Label>
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Height="75" Name="TabCustomers">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Customers</Label>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!--Please keep an effective naming scheme for controls!-->
+                <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
+                <Grid Name="CustomersGrid">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl">
+                        <TabItem Name="CustomersHomeTab">
+                            <TabItem.Header>
+                                <Label>Home</Label>
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+
+
+            </TabItem>
+
+
+            <TabItem Height="75" Name="TabOrders">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Orders</Label>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!--Please keep an effective naming scheme for controls!-->
+                <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
+                <Grid Name="OrdersGrid">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="OrdersTabControl">
+                        <TabItem Name="OrdersHomeTab">
+                            <TabItem.Header>
+                                <Label>Home</Label>
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+            </TabItem>
+            
+            
+            
+            <TabItem Height="75" Name="TabInventory">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Inventory</Label>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!--Please keep an effective naming scheme for controls!-->
+                <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
+                <Grid Name="InventoryGrid">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="InventoryTabControl">
+                        <TabItem Name="InventoryHomeTab">
+                            <TabItem.Header>
+                                <Label>Home</Label>
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
