@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabasePrototype", "DatabasePrototype\DatabasePrototype.csproj", "{E5E2C591-61F0-493C-9519-B638906E6FAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dbutils", "dbutils\dbutils.csproj", "{946169BD-9F97-44E4-BD02-AF82632B7666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WallyWorld", "..\WallyWorld\WallyWorld\WallyWorld.csproj", "{B2CC1795-50E2-4EEC-91A7-37344AA5A196}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{946169BD-9F97-44E4-BD02-AF82632B7666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{946169BD-9F97-44E4-BD02-AF82632B7666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{946169BD-9F97-44E4-BD02-AF82632B7666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CC1795-50E2-4EEC-91A7-37344AA5A196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CC1795-50E2-4EEC-91A7-37344AA5A196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CC1795-50E2-4EEC-91A7-37344AA5A196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CC1795-50E2-4EEC-91A7-37344AA5A196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
