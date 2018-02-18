@@ -10,6 +10,12 @@
         <Label Content="WALLYWORLD" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36"/>
         <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top">
             <TabItem Height="75" Name="TabStores">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFE7E8EC" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Label>Stores</Label>
