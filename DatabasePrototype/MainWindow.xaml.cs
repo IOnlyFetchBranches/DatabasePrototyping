@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -28,10 +29,16 @@ namespace DatabasePrototype
             InitializeComponent();
 
             InitializeTabs();
+
+            
+
+
         }
 
 
-
+        /// <summary>
+        /// This is the method that fills tabs
+        /// </summary>
         private void InitializeTabs()
         {
             foreach (TabItem mainTab in MainTabControl.Items)

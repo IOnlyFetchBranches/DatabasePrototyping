@@ -16,7 +16,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <!--This is the beginning of the actual content for a tabitem-->
-                
+
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="StoresGrid">
@@ -25,13 +25,19 @@
                             <TabItem.Header>
                                 <Label>Home</Label>
                             </TabItem.Header>
+                            <Grid HorizontalAlignment="Left" Margin="12,12,0,10" Width="502">
+                                <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
+                                <Label Content="Filter By&#xD;&#xA;" Margin="15,0,380,151" Height="26" VerticalAlignment="Bottom"/>
+                            </Grid>
                         </TabItem>
                     </TabControl>
-                    
+
                 </Grid>
-                
-                
+
+
             </TabItem>
+
+
 
             <TabItem Height="75" Name="TabEmployees">
                 <TabItem.Header>
@@ -98,9 +104,9 @@
                 </Grid>
 
             </TabItem>
-            
-            
-            
+
+
+
             <TabItem Height="75" Name="TabInventory">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
