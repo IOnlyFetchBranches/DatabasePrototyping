@@ -81,8 +81,15 @@ namespace DatabasePrototype
         }
 
 
+        //Event Handlers
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void StoresSearchByComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Invoked When User Chooses A Search By On The Stores Screen.
 
         }
     }
