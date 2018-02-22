@@ -46,7 +46,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <ComboBox x:Name="StoresFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                                <ComboBox x:Name="StoresFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" IsDropDownOpen="True">
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -124,7 +124,7 @@
                             <MenuItem Header="Salary"/>
                         </ComboBox>
                         <TextBox x:Name="EmployeesSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" Text="Type Here Or Choose Filter!" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" TextAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-                        <ComboBox x:Name="EmployeesSearchByComboBox" Margin="103,188,336,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,0.714" SelectionChanged ="StoresSearchByComboBox_OnSelectionChanged">
+                        <ComboBox x:Name="EmployeesSearchByComboBox" Margin="103,188,336,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,0.714" SelectionChanged ="EmployeesSearchByComboBox_OnSelectionChanged">
                             <ComboBox.Background>
                                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                     <GradientStop Color="#FFF0F0F0" Offset="0"/>

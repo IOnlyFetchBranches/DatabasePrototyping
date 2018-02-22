@@ -79,7 +79,7 @@ namespace DatabasePrototype
 
         }
 
-        private void StoresSearchByComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void EmployeesSearchByComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Invoked When User Chooses A Search By On The Stores Screen.
 
