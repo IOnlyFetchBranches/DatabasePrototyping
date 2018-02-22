@@ -46,20 +46,12 @@ namespace DatabasePrototype
                 //Debug
                 LogG(mainTab.Name);
 
+                SqlConnection connection = new SqlConnection(dbutils.Models.ConnectionStrings.Shawn);
                 switch (mainTab.Name)
                 {
                     
                     case "TabStores":
-                        //Example
-                        StoresHomeTab.Content = new Label()
-                            .Content = "This is an example of assigning content to a TabItem..." +
-                                       "\nThis can be any Control at all, including containers!" +
-                                       "\nSo You can imagine how creative you can get."+
-                                       "\nBesure to Follow the naming conventions, it really helps later on." +
-                                       "\nWhen you guys get a working layout, tell me we can run through it and I can wire it up." +
-                                       "\nAlso note that any utility methods can be found in the attached dll I've started [dbutils]" +
-                                       "\nIf you create a method/helper class/data structure you think could be used universally, create it there." +
-                                       "\nDon't forget to rebuild! [Or build it] ";
+                        
 
                         break;
                     case "TabEmployees":
