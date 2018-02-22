@@ -55,6 +55,7 @@
                                     </ComboBox.Background>
                                 </ComboBox>
                                 <TextBox x:Name="StoresSearchBar" Height="20" Margin="22,101,99,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                                <Button x:Name="FilterInStoresButton" Content="Filter" HorizontalAlignment="Left" Margin="183,215,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA" RenderTransformOrigin="0.402,1.147" IsEnabled="False"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -104,15 +105,21 @@
                                 </LinearGradientBrush>
                             </ComboBox.Background>
                         </ComboBox>
-                        <ComboBox x:Name="StoresFilterBy1" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                        <ComboBox x:Name="StoresFilterBy1" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" IsReadOnly="True">
                             <ComboBox.Background>
                                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                     <GradientStop Color="#FFF0F0F0" Offset="0"/>
                                     <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                 </LinearGradientBrush>
                             </ComboBox.Background>
+                            <ComboBoxItem x:Name="FirstNameCombo" Content="First Name" HorizontalAlignment="Left" Width="92"/>
+                            <ComboBoxItem x:Name="LastNameCombo" Content="Last Name" HorizontalAlignment="Left" Width="92"/>
+                            <ComboBoxItem x:Name="PositionCombo" Content="Position" HorizontalAlignment="Left" Width="92"/>
+                            <ComboBoxItem x:Name="WageCombo" Content="Wage" HorizontalAlignment="Left" Width="92"/>
+                            <ComboBoxItem x:Name="CurrentStatusCombo" Content="Current Status" HorizontalAlignment="Left" Width="92"/>
                         </ComboBox>
                         <TextBox x:Name="EmployeesSearchBar" Height="20" Margin="22,101,99,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                        <Button x:Name="EmployeesFilterButton" Content="Filter" HorizontalAlignment="Left" Margin="183,215,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA" RenderTransformOrigin="0.492,-0.924"/>
                     </Grid>
 
                 </Grid>
