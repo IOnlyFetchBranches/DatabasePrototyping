@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using dbutils.Models;
 
 using static dbutils.Logger;
 
@@ -21,57 +22,86 @@ namespace DatabasePrototype
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// DENOTE EACH QUERY IN CODE WITH A //QUERY {For what/Question} HEADER
     /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
+
             InitializeComponent();
 
-            InitializeTabs();
-
             
+
+            //Load Functionality for Employees
+            InitializeEmployees();
+
+
 
 
         }
 
 
         /// <summary>
-        /// This is the method that fills tabs
+        /// This is the method that inits the employee functionaility
         /// </summary>
-        private void InitializeTabs()
+        private void InitializeEmployees()
         {
-            foreach (TabItem mainTab in MainTabControl.Items)
+            var SearchBy = EmployeesSearchByComboBox;
+
+            SearchBy.SelectionChanged += (obj, sender) =>
             {
-                //Debug
-                LogG(mainTab.Name);
-
-                SqlConnection connection = new SqlConnection(dbutils.Models.ConnectionStrings.Shawn);
-                switch (mainTab.Name)
+                //Set on change to enable search button, if filterby is untouched
+                if (!EmployeesFilterOptionBar.IsEnabled)
+                    EmployeesRunButton.IsEnabled = true;
+                else
                 {
-                    
-                    case "TabStores":
-                        
-
-                        break;
-                    case "TabEmployees":
-                        break;
-                    case "TabCustomers":
-                        break;
-                    case "TabOrders":
-                        break;
-                    case "TabInventory":
-                        break;
-                    default:
-                        //We should never reach here, unless you modify the name in the XAML
-                        LogErr("Main", "Unable to match a Main Tab Name!");
-                        break;
+                    EmployeesRunButton.IsEnabled = false;
                 }
+            };
 
+            var FilterBy = EmployeesFilterByComboBox;
 
+            FilterBy.SelectionChanged += (obj, sender) =>
+            {
+                //Set on change to enable filter box if not enabled
+                if (!EmployeesFilterOptionBar.IsEnabled)
+                    EmployeesFilterOptionBar.IsEnabled = true;
+
+                if (EmployeesRunButton.IsEnabled)
+                    EmployeesRunButton.IsEnabled = false;
+            };
+
+            var RunButton = EmployeesRunButton;
+
+            //Remember to set default button for each home tab, so that enter will trigger.
+            RunButton.IsDefault = true;
+            RunButton.Click += (obj, sender) =>
+            {
+                //The run button for each tab is responsible for sanitizing input, building the query and launching the result tab
+                //First case is when there is no filter by
+                if (!EmployeesFilterOptionBar.IsEnabled)
+                {
+                    string searchByChoice = SearchBy.Text;
+                    //Remove spaces
+                    searchByChoice = searchByChoice.Replace(" ", "");
+                    
+                    //Build Query
+                    switch (searchByChoice.ToLower())
+                    {
+                        case "eid":
+                            //QUERY Get Employee By Eid
+                            break;
+                    }
+                }
             }
-        }
 
+
+
+
+        }
+    
 
         //Event Handlers
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,10 +109,11 @@ namespace DatabasePrototype
 
         }
 
-        private void EmployeesSearchByComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Invoked When User Chooses A Search By On The Stores Screen.
+       
 
+        private void EmployeesSearchBar_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            EmployeesSearchBar.Text = "";
         }
     }
 }

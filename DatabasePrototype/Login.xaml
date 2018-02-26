@@ -20,7 +20,7 @@
         <TextBox x:Name="LoginUserName" Height="27" Margin="106,209,84.4,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
         <Label x:Name="LoginUserNameLabel" Content="Username:" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,-0.654" FontFamily="Segoe UI Emoji" FontSize="16" Padding="3" UseLayoutRounding="True" Background="#FF212121" FontWeight="Bold" Height="27" Width="83" Foreground="#FFFAFAFA"/>
         <Label x:Name="LoginUserPasswordLabel" Content="Password:" HorizontalAlignment="Left" Margin="11,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.011,-0.654" FontFamily="Segoe UI Emoji" FontSize="16" Padding="3" UseLayoutRounding="True" Background="#FF212121" Width="82" FontWeight="Bold" Height="27" Foreground="#FFFAFAFA"/>
-        <TextBox x:Name="LoginUserPassword" Height="27" Margin="106,287,84.4,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFF1F2F7"/>
+        <PasswordBox x:Name="LoginUserPassword" Height="27" Margin="106,287,84.4,0"  VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFF1F2F7"/>
         <Button x:Name="LoginButton" Content="Login" Margin="256,0,86.4,170" VerticalAlignment="Bottom" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" RenderTransformOrigin="1.514,1.977" Height="34" Click="LoginButton_Click" Foreground="#FF212121" Background="#FFFAFAFA">
             <Button.RenderTransform>
                 <TransformGroup>
