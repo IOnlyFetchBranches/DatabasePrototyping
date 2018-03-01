@@ -20,17 +20,18 @@ namespace DatabasePrototype.Models
 
 
         /// <summary>
-        /// Creates a new Employee Result;
+        /// Creates a new Employee Result.
+        /// Accepts Objects, although it is expecting STRINGS ONLY.
         /// </summary>
-        /// <param name="memberStrings">Must be size 3, Format for now! {eid info,FirstName, LastName} F</param>
-        public EmployeeResult(params string[] memberStrings)
+        /// <param name="memberStrings">Must be size 3, Format for now! {eid info,FirstName, LastName}</param>
+        public EmployeeResult(params object[] memberStrings)
         {
             if (memberStrings.Length != 3)
                 throw new ArgumentException("Input must contain three fields. See docs.");
             //Set fields
-            _idm = memberStrings[0];
-            _pm = memberStrings[1];
-            _sm = memberStrings[2];
+            _idm = (string) memberStrings[0];
+            _pm = (string) memberStrings[1];
+            _sm = (string) memberStrings[2];
 
         }
 

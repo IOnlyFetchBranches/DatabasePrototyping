@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace DatabasePrototype.Models
         private ListView resultContainer;
 
         private GridView resultGrid;
+
+        private DataTable resultData;
 
         public ResultsTab()
         {
@@ -53,10 +56,21 @@ namespace DatabasePrototype.Models
             //This sets the field this column will get data from
             secondaryColumn.DisplayMemberBinding = new Binding("SecondaryMember");
 
-            //Add all binded column to grid view.
+            //Add all binded columns to grid view.
             resultGrid.Columns.Add(idColumn);
             resultGrid.Columns.Add(primaryColumn);
             resultGrid.Columns.Add(secondaryColumn);
+
+            
+
+            //Set onclick
+            resultContainer.MouseDoubleClick += (sender, args) =>
+            {
+                var item = (IResult) resultContainer.SelectedItem;
+                MessageBox.Show("Selected: " + item.IdentifyingMember);
+
+            };
+
 
 
         }
@@ -78,11 +92,13 @@ namespace DatabasePrototype.Models
                     resultGrid.Columns[0].Header = item.IdHeader();
                     resultGrid.Columns[1].Header = item.PrimaryHeader();
                     resultGrid.Columns[2].Header = item.SecondaryHeader();
+
+                    MessageBox.Show("Added " + item.IdentifyingMember + " " + item.PrimaryMember + " " +
+                                    item.SecondaryMember);
                 }
 
-
-                //Push to container
                 resultContainer.Items.Add(item);
+               
 
                 //Return success
                 return true;
@@ -96,20 +112,71 @@ namespace DatabasePrototype.Models
         }
 
 
+
+
+
         /// <summary>
-        /// Call this method to prepare a tab's results, once you are done adding.
+        /// Call this method to prepare a tab's results, once you are done adding, and name the tab using Name();
         /// ONLY CALL THIS ONCE PER RESULT TAB.
         /// </summary>
-        public void Prepare()
+        public void Prepare(string headingTitle)
         {
+
             if (Content != null)
                 throw new ThreadStateException("Cannot Prepare Twice.");
 
             //Set as data mold
             resultContainer.View = resultGrid;
 
-            //Set content base;
+            //Set Header to add close button
+            var heading = new StackPanel();
+            heading.Orientation = Orientation.Horizontal; //Display in line
+
+            var headingLabel = new Label();
+            headingLabel.Content = headingTitle + "\t"; //Set title
+            heading.Children.Add(headingLabel); //Add to grid
+
+            //Add closeing label
+            var closeLabel = new Label();
+            closeLabel.Content = "x";
+            //Format it correctly
+            closeLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+            closeLabel.VerticalContentAlignment = VerticalAlignment.Center;
+
+            //Set onclick, to close tab
+            closeLabel.MouseDown += (sender, args) =>
+            {
+                var parent = (TabControl) this.Parent;
+                int index = 0;
+                foreach (var tab in parent.Items)
+                {
+                    if (tab.GetHashCode() == this.GetHashCode())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+                //Before you remove send user to the immediate left tab.
+                parent.SelectedIndex = index - 1;
+
+                //remove tab
+                parent.Items.RemoveAt(index);
+            };
+            //Add Close Label
+            heading.Children.Add(closeLabel);
+            //Set heading
+            this.Header = heading;
+            
+
+
+            //Set content basing
+            rootGrid.Children.Add(resultContainer);
             Content = rootGrid;
+
+              MessageBox.Show("Header "+this.Header.GetType() + " grid Items: " + resultContainer.Items.Count );
         }
     }
 }

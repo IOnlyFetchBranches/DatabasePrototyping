@@ -56,10 +56,18 @@ namespace DatabasePrototype
 
 
         /// <summary>
-        /// This is the method that inits the employee functionaility
+        /// This is the method that inits the employee tab functions.
+        /// Be prepared to replicate this logic for the other tab init functions.
+        /// We can split this up across muliple partial classes if needed.
+        /// One class per initializer, if things get too hectic.
         /// </summary>
         private void InitializeEmployees()
         {
+            //Declare Search Bar for easy ref, We'll get to it later.
+            var SearchBar = EmployeesSearchBar;
+
+            
+
 
             var SearchBy = EmployeesSearchByComboBox;
 
@@ -90,6 +98,7 @@ namespace DatabasePrototype
 
             //Remember to set default button for each home tab, so that enter will trigger.
             RunButton.IsDefault = true;
+            //The most important part, contains submission logic.
             RunButton.Click += (obj, sender) =>
             {
                 //The run button for each tab is responsible for sanitizing input, building the query and launching the result tab
@@ -153,31 +162,48 @@ namespace DatabasePrototype
                     //Launch Command, Returns a Reader on the result table
                     var results = GetEmployeeByEid.ExecuteReader();
 
-                    //Spawn a new results tab;
+                    //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
                     var resultsTab = new ResultsTab();
-
-                    //Compile results here for testing
-                    var sb = new StringBuilder();
                     
                     
                     
                     while (results.Read())
                     {
-                        sb.AppendLine(results[0] + " " + results[1] + " " + results[2]);
-                        
+                        var result = new EmployeeResult(results[0], results[1], results[2]); //Create new result with an EMPLOYEE Context.
+                        resultsTab.Add(result);
+                    }
+            
+                    //CLOSE the sql command's reader, or subsequent calls to the sql command will fail!
+                    results.Close();
+
+                   //Handle naming...
+                    
+                    //How many other result tabs are open?
+                    int count = 1; //init the counter
+                    foreach (object tab in EmployeesTabControl.Items)
+                    {
+                        if (tab is ResultsTab)
+                            count++;
                     }
 
-                    results.Close(); //Gotta close the reader to recycle the command.
+               
+                  
+                
+                    //PREPARE the tab BEFORE adding to the MasterTab's TabControl.
+                    resultsTab.Prepare("Results " + count);
+                    //Add to tabcontrol.
+                    EmployeesTabControl.Items.Add(resultsTab);
 
-                    MessageBox.Show(sb.ToString(), "Results", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //Switch to new tab
+                    EmployeesTabControl.SelectedIndex = EmployeesTabControl.Items.Count - 1;
 
                 }
                 
 
             };
-
+            //Filter drop down
             var FilterOptions = EmployeesFilterOptionBar;
-
+            //Enables/Disables submit button
             EmployeesFilterOptionBar.TextChanged += (obj, sender) =>
             {
                 if (FilterOptions.Text.Length > 1)
@@ -193,6 +219,26 @@ namespace DatabasePrototype
 
 
 
+            //Handler that disables search button if box is empty.
+            SearchBar.TextChanged += (sender, args) =>
+            {
+                if (SearchBar.Text.Length == 0)
+                    EmployeesRunButton.IsEnabled = false;
+                //If there is text AND search by is filled AND there's no filter
+                else if (SearchBy.SelectedItem != null && !EmployeesFilterOptionBar.IsEnabled)
+                {
+                    RunButton.IsEnabled = true;
+                }
+                //If there is text AND search by is filled AND the filter contains text
+                else if (SearchBy.SelectedItem != null && EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar?.Text.Length >0 )
+                {
+                    RunButton.IsEnabled = true;
+                }
+
+            };
+
+
+
 
         }
     
@@ -204,10 +250,22 @@ namespace DatabasePrototype
         }
 
        
-
+        /// <summary>
+        /// Will clear any default text.
+        /// We Don;t have to have this but it makes life easier.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EmployeesSearchBar_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            EmployeesSearchBar.Text = "";
+            //Check for default text or this becomes very annoying!
+            if(EmployeesSearchBar.Text.Contains("Type Here Or Choose Filter!"))
+                EmployeesSearchBar.Text = "";
+        }
+
+        private void EmployeesSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
