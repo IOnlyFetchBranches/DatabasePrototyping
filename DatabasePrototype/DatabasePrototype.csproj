@@ -76,6 +76,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ConnectionManager.cs" />
+    <Compile Include="Models\ConnectionStrings.cs" />
+    <Compile Include="Models\EmployeeResult.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\ResultsTab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -107,8 +112,6 @@
       <Name>dbutils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

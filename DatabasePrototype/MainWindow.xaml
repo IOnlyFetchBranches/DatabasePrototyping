@@ -120,7 +120,7 @@
                             </ComboBox.Background>
                             <MenuItem Header="Choose..." IsEnabled="False"/>
                             <ComboBoxItem HorizontalContentAlignment="Center">Position</ComboBoxItem>
-                            <ComboBoxItem HorizontalContentAlignment="Center">Status</ComboBoxItem>
+                            <ComboBoxItem HorizontalContentAlignment="Center">CurrentStatus</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">ZipCode</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">HourlyWage</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">Salary</ComboBoxItem>
