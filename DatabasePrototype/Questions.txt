@@ -1,0 +1,81 @@
+﻿Shawn -Customers, Orders/Shipping
+
+ Top 10 most popular item ordered?
+What orders are shipped the fastest on average?
+Top 10 least popular items ordered?
+What is the order number?
+What is the customer id that links order and customer?
+ what is the Customer’s Shipping address for the order?
+Customer ID?
+Customer first name?
+Customer last name?
+Which customers spend the most?
+How long has it been since their last visit with the store?
+Which customers visit the most?
+Monthly?
+Yearly?
+What department do they shop in the most?
+Which type of goods do customers purchase mostly?
+
+Marcus-Employees
+
+Employees with first name X? (EC)
+Employees with last name X? (EC)
+Employees at with pay as/between X? (EC)
+Employees located near zip X? (EC)
+Employees with Stocker position? (EC)
+Employees that have been fired?
+Employees that Work in X department(EC)
+Employees with salary X? (EC)
+What is Employee X’s ID? (EC)
+What is Employee X’s Emergency Contact? (EEC)
+Phone Number?
+Work Hours?
+Employee Terminated sub table?
+What is the EID of the terminated Employee?
+Emergency Contact of the Terminated ID?
+What is the termination Date?
+What is the start date?
+
+Michael-Departments
+
+How many/what are the departments in the store?
+Who is the manager of Dept.Produce?
+Where and how many cameras for security are in the store?
+How many anti-theft readers at each door?
+How many times have the anti-theft readers activated in the last month?
+Which security features have not received maintenance in the past month?
+Which departments are the ICD (defibrillator) located?
+Name of maintenance personnel who performed last check on X device?
+Which Depts.record the most theft occurrences?
+What is the cost of security instances in Dept.X?
+
+Prince-Inventory
+
+When was the last and next restock of a certain good?
+How often are shipments received?
+What is the most ordered good?
+Which month experiences the most inventory decrease?
+Which good is least sold?
+ Which goods are due to expire? (does this help?)
+Which goods are purchased together?
+Which goods are least profitable in terms of supply?
+Total Income for the week, month, or year?
+How fast are shipments received on average?
+
+Matthew-Promotions, Customer rewards
+
+When was repair X requested?
+When repair X was completed?
+Who completed request X?
+Who Submitted request X?
+-What did repair request X entail?
+Pull all promotions?
+Pull top 5 Promotions?
+Promotions tied to store card?
+All stores located in region X?
+What is store x’s address?
+What is store x’s region?
+How many customers have a store card?
+How many gift cards above $#.##? 
+
