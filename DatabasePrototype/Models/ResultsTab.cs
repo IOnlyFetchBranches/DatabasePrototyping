@@ -67,7 +67,17 @@ namespace DatabasePrototype.Models
             resultContainer.MouseDoubleClick += (sender, args) =>
             {
                 var item = (IResult) resultContainer.SelectedItem;
-                MessageBox.Show("Selected: " + item.IdentifyingMember);
+                try
+                {
+                    MessageBox.Show("Selected: " + item.IdentifyingMember);
+
+                }
+                catch (NullReferenceException nre)
+                {
+                    //The system will throw a nre if the user clicks on the header, issue that should be addressed
+
+                }
+
 
             };
 

@@ -15,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using dbutils;
 using dbutils.Models;
+using DatabasePrototype.Exceptions;
 using DatabasePrototype.Models;
 using static dbutils.Logger;
 
@@ -41,7 +43,13 @@ namespace DatabasePrototype
 
             InitializeComponent();
 
-           
+            //Init Logger
+            string path = Logger.NewFile(null, true);
+            //Test
+            Logger.LogG("Opened log file at " +path);
+            
+            //We'll display this log location to the user using a label on our status bar;
+            MainStatusLabelLogPath.Content = "Logging To: " + path;
             //Open Db Connection
             db = ConnectionManager.Open(ConnectionStrings.Marcus);
 
@@ -58,17 +66,29 @@ namespace DatabasePrototype
         /// <summary>
         /// This is the method that inits the employee tab functions.
         /// Be prepared to replicate this logic for the other tab init functions.
-        /// We can split this up across muliple partial classes if needed.
+        /// If we do this right we can reuse a good bit of this logic for all the other classes
+        /// This is a segmentation based approach to formulating query logic
+        /// The goal is to do minimum hardcoding, unfortunately this means relying on direct input
+        /// I've included sanitizing handlers on all text entry for ensuring we don't get malicious input
+        /// We can split this up across muliple partial classes if needed, you can only access controls directly
+        /// from the main class thats linked to the window.
+        /// There may be other ways to split it up among completely different classes, let me [Marcus] know.
         /// One class per initializer, if things get too hectic.
         /// </summary>
         private void InitializeEmployees()
         {
-            //Declare Search Bar for easy ref, We'll get to it later.
+
+            //Set generic table name
+            string mainTable = "Employees";
+            //Declare column names to a generic name
+            string id = "EID";
+            string primaryColumn = "FirstName";
+            string secondaryColumn = "LastName";
+
+            //Declare Controls to a generic name;
+            //That way we can resuse most of this logic by just assigning the proper control here.
             var SearchBar = EmployeesSearchBar;
-
-            
-
-
+            //We do the same for every other control
             var SearchBy = EmployeesSearchByComboBox;
 
             SearchBy.SelectionChanged += (obj, sender) =>
@@ -82,8 +102,13 @@ namespace DatabasePrototype
                 }
             };
 
+            var OrderBy = EmployeesSortByComboBox;
+
+
+
             var FilterBy = EmployeesFilterByComboBox;
 
+            //Acts as a filter
             FilterBy.SelectionChanged += (obj, sender) =>
             {
                 //Set on change to enable filter box if not enabled
@@ -92,6 +117,7 @@ namespace DatabasePrototype
 
                 if (EmployeesRunButton.IsEnabled)
                     EmployeesRunButton.IsEnabled = false;
+
             };
 
             var RunButton = EmployeesRunButton;
@@ -131,13 +157,25 @@ namespace DatabasePrototype
 
                     string searchByChoice = SearchBy.Text;
                     string filterByChoice = FilterBy.Text;
+                    string orderByChoice = OrderBy.Text;
 
                     
                     //Remove spaces
                     searchByChoice = searchByChoice.Replace(" ", "");
                     filterByChoice = filterByChoice.Replace(" ", "");
+                    orderByChoice = orderByChoice.Replace(" ", "");
                     
                     //Build Query
+                    //Hopefully the only part we'll have to hardcode
+
+                    string joinStatement = "";
+                    //now join statement needs to be empty by default
+                    //how do we sovle the question of knowing WHENwe need a join, being  least hardcody as possible?
+
+                    
+
+
+                    string selectionStatement = "Select "+id+","+primaryColumn+", "+secondaryColumn+" From " +mainTable + " " + joinStatement;
 
                     string filterStatement = ""; //triggered if filter by is on
 
@@ -145,29 +183,92 @@ namespace DatabasePrototype
                     {
                         filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
                     }
+
+
+                    string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
+
+                    if (sanitizedText.Length > 0)
+                        //If the user has followed the default search logic
+                        //(Type info in search bar, choose search by =>{Whatever else}
+                        whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                    else if (sanitizedText.Length == 0 && filterStatement != "")
+                    {
+                        //If the user wants all users that match a given filter, then type the filter in the option bar
+                        whereStatement =
+                            "Where " + filterStatement.Replace(" And ",
+                                ""); //Its just the filter statement minus the And part;
+                    }
+                    else
+                    {
+                        throw new IllegalStateException("Error in Employee query generation conditional logic.");
+                    }
+
+                    //This is the final part of our query, the order statement
+                    string orderStatement = "";
+
+
+                    if (OrderBy.SelectedIndex == 1)
+                    {
+                        //This would be the full name;
+                        if (EmployeesCheckBoxIsDesc.IsChecked != null && (bool) EmployeesCheckBoxIsDesc.IsChecked)
+                        {
+                            //If they want it desc
+                            orderStatement = " Order By FirstName Desc, LastName Desc";
+                        }
+                        else
+                        {
+                            orderStatement = " Order By FirstName, LastName";
+                        }
+
+                    }
+                    else if(OrderBy.SelectedIndex != -1)
+                    {
+                        //anything other than full name
+                        if (EmployeesCheckBoxIsDesc.IsChecked != null && (bool)EmployeesCheckBoxIsDesc.IsChecked)
+                        {
+                            //If they want it desc
+                            orderStatement = " Order By "+ orderByChoice +" Desc";
+                        }
+                        else
+                        {
+                            orderStatement = " Order By " + orderByChoice; // Ascending order is default.
+                        }
+                    }
+                
                     
+
                      //QUERY Get Employee By Eid
                     SqlCommand GetEmployeeByEid = new SqlCommand(
                                 //Do not forget to space after each statement
-                                "Select EID, FirstName, LastName From Employees " +
+                                //Although I've already added proper spacing in the statements themselves
+                                //Data we will be returning
+                                selectionStatement +
                                 //Yes for inserted strings, that you want to be evaluated in sql as string
                                 //You still have to concat the ' before AND after!
-                                "Where "+ searchByChoice + " = '" + sanitizedText+"' " + filterStatement
+                                whereStatement +
+                                //Now we just concat our formulated order statement
+                                orderStatement
+                                //That's it.
                                 );
+                    //Debug ops
+                    Logger.LogG("SqlCommand", "Created query:\n" + GetEmployeeByEid.CommandText);
+
                     //You must link the connection, maybe we can create a connection wrapper that does this for us.
                     //You could also pass as second param in constructor but the idea would be to have it link automatically
                     //It could grab the db connection from the Connection Manager.
                     GetEmployeeByEid.Connection = db;
 
-                    //Launch Command, Returns a Reader on the result table
-                    var results = GetEmployeeByEid.ExecuteReader();
-
-                    //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
-                    var resultsTab = new ResultsTab();
+                    try
+                    {
+                        //Launch Command, Returns a Reader on the result table
+                        var results = GetEmployeeByEid.ExecuteReader(); 
+                        
+                        //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
+                        var resultsTab = new ResultsTab();
                     
                     
                     
-                    while (results.Read())
+                        while (results.Read())
                     {
                         var result = new EmployeeResult(results[0], results[1], results[2]); //Create new result with an EMPLOYEE Context.
                         resultsTab.Add(result);
@@ -175,8 +276,8 @@ namespace DatabasePrototype
             
                     //CLOSE the sql command's reader, or subsequent calls to the sql command will fail!
                     results.Close();
-
-                   //Handle naming...
+                    
+                    //Handle naming...
                     
                     //How many other result tabs are open?
                     int count = 1; //init the counter
@@ -186,20 +287,31 @@ namespace DatabasePrototype
                             count++;
                     }
 
-               
-                  
-                
                     //PREPARE the tab BEFORE adding to the MasterTab's TabControl.
                     resultsTab.Prepare("Results " + count);
                     //Add to tabcontrol.
                     EmployeesTabControl.Items.Add(resultsTab);
 
-                    //Switch to new tab
+                    //Switch to new tab, for pazzaz really, but it makes sense.
+                    //ie when a user searches, you expect to be brought to the results
+                    //imagine if google opened it's results in a new tab and made you switch to it
+                    //or when you rightclick and issue an  open in new tab command , you have to manually click the tab
+                    //it wouldn't make any sense, so don't forget to always do this.
                     EmployeesTabControl.SelectedIndex = EmployeesTabControl.Items.Count - 1;
 
+
+                    }
+                    catch (SqlException sqe)
+                    {
+                        //Use EasyBox to handle errors.
+                        EasyBox.ShowError(sqe);
+                    }
+
+                   
+                  
+               
                 }
                 
-
             };
             //Filter drop down
             var FilterOptions = EmployeesFilterOptionBar;
