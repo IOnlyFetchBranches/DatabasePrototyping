@@ -23,7 +23,7 @@ Employees with first name X? (EC) (Good)
 Employees with last name X? (EC) (Good) -> G
 Employees at with pay as/between X? (EC) G
 Employees located near zip X? (EC) G?
-Employees with Stocker position? (EC) 
+Employees with Stocker position? (EC) G
 Employees that have been fired?
 Employees that Work in X department(EC)
 Employees with salary X? (EC)

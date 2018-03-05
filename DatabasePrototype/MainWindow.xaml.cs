@@ -23,10 +23,18 @@ using static dbutils.Logger;
 
 namespace DatabasePrototype
 {
+    /*
+        Triple slashes [///] denote Summary comments, and you can see them when calling a method in the summary box
+        Use these for DOCUMENTATION of methods/class/variables.
+        Don't Forget:
+        DENOTE EACH QUERY IN CODE WITH A //QUERY {For what/Question} HEADER
+        So That we can search the code efficiently!
+        Also Don't forget to mark the question answered with a G, in the questions file
+        This is a partial class and can be split across multiple files, if we need too.
+     */
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// 
-    /// DENOTE EACH QUERY IN CODE WITH A //QUERY {For what/Question} HEADER
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -37,7 +45,7 @@ namespace DatabasePrototype
         /// </summary>
         private static SqlConnection db;
         
-
+        
         public MainWindow()
         {
 
@@ -85,6 +93,24 @@ namespace DatabasePrototype
             string primaryColumn = "FirstName";
             string secondaryColumn = "LastName";
 
+
+            //One way of doing dynamic joins?
+            //The keys in this dictionary represent a selection value, such as Zipcode
+            //The values are the table that would be needed to retireve this value, For zip thats EmployeeContacts
+            //We could check contains<Selection value> and them automatically append the correct table to the join statement?
+            Dictionary<string, string> joinList = new Dictionary<string, string>();
+
+            //Add conditions, remeber these are just column names that you need to account for.
+            //Good example, even though i show ZipCode to the user, We sanitize that to a proper column name "Zip"
+            //THEN we query the joinList for the correct table to join to.
+            //ALL this is taken care of, or should be, by the rest of the logic so just ensure you have the proper columns here
+            //Then Go down to the "Sanitization Section" and  ensure you're sanitizing any "Facade Names" to a proper column name where you need to
+            //OTHERWISE it wont match on the join list, and you WONT get a join!
+            //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
+            //50 Questions handled
+        
+            joinList.Add("Zip", "EmployeeContacts");    
+
             //Declare Controls to a generic name;
             //That way we can resuse most of this logic by just assigning the proper control here.
             var SearchBar = EmployeesSearchBar;
@@ -131,7 +157,7 @@ namespace DatabasePrototype
                 //First case is when there is no filter by
                 if (true)
                 {
-
+                    //SANITIZATION SECTION
                     var sanitizedText = EmployeesSearchBar.Text;
 
                     int spaces = 0; //TrackSpaces 
@@ -159,24 +185,42 @@ namespace DatabasePrototype
                     string filterByChoice = FilterBy.Text;
                     string orderByChoice = OrderBy.Text;
 
+                
                     
                     //Remove spaces
                     searchByChoice = searchByChoice.Replace(" ", "");
                     filterByChoice = filterByChoice.Replace(" ", "");
                     orderByChoice = orderByChoice.Replace(" ", "");
-                    
+
+                    //If you have any 'facade names' that is , inputs that don't share the same screen name as the column name, handle that here
+                    if (filterByChoice == "ZipCode")
+                        filterByChoice = "Zip"; //Change to the shortened form
+
                     //Build Query
                     //Hopefully the only part we'll have to hardcode
+                    
+                    //STATEMENT SECTION
 
                     string joinStatement = "";
                     //now join statement needs to be empty by default
                     //how do we sovle the question of knowing WHENwe need a join, being  least hardcody as possible?
 
-                    
+                    //All joins will be done by some sort of ID
 
+                    //conditionals for all entries that will require touching another table and making sure that table is accounted for
+                    if (joinList.ContainsKey(filterByChoice))
+                    {
+                        //On <jtable>.<idvalue> = <maintable>.<idvalue>
+                        var onStatement = " On " + joinList[filterByChoice] + "." + id + " = " + mainTable + "." + id;
+                        // <maintabl> , <jtable> + [OnStatement]
+                        joinStatement += " join " + joinList[filterByChoice] + " " + onStatement + " ";
 
-                    string selectionStatement = "Select "+id+","+primaryColumn+", "+secondaryColumn+" From " +mainTable + " " + joinStatement;
+                    }
 
+                    string fromStatement = " From " + mainTable + " " + joinStatement;
+                    //Explanation for +Maintable + "." + id, To prevent ambiguous column name in case of join
+                    string selectionStatement = "Select "+mainTable+"."+id+","+primaryColumn+", "+secondaryColumn + " " + fromStatement;
+                    //The "And" Part of the where OR the WHOLE where if there is no search by chosen.
                     string filterStatement = ""; //triggered if filter by is on
 
                     if (EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar.Text.Length > 0)
@@ -235,10 +279,10 @@ namespace DatabasePrototype
                         }
                     }
                 
+                    //NOW WEBUILD THE QUERY
                     
-
-                     //QUERY Get Employee By Eid
-                    SqlCommand GetEmployeeByEid = new SqlCommand(
+                     //QUERY
+                     SqlCommand GetEmployees = new SqlCommand(
                                 //Do not forget to space after each statement
                                 //Although I've already added proper spacing in the statements themselves
                                 //Data we will be returning
@@ -250,18 +294,19 @@ namespace DatabasePrototype
                                 orderStatement
                                 //That's it.
                                 );
-                    //Debug ops
-                    Logger.LogG("SqlCommand", "Created query:\n" + GetEmployeeByEid.CommandText);
+                    //Debug ops, and for easy referencing later.
+                    Logger.LogG("SqlCommand",
+                        "Created query:" + Environment.NewLine + GetEmployees.CommandText + Environment.NewLine);
 
                     //You must link the connection, maybe we can create a connection wrapper that does this for us.
                     //You could also pass as second param in constructor but the idea would be to have it link automatically
                     //It could grab the db connection from the Connection Manager.
-                    GetEmployeeByEid.Connection = db;
+                    GetEmployees.Connection = db;
 
                     try
                     {
                         //Launch Command, Returns a Reader on the result table
-                        var results = GetEmployeeByEid.ExecuteReader(); 
+                        var results = GetEmployees.ExecuteReader(); 
                         
                         //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
                         var resultsTab = new ResultsTab();
@@ -305,6 +350,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
+                        Application.Current.Shutdown(1);
                     }
 
                    
