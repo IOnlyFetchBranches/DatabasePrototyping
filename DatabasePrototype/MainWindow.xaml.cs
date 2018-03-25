@@ -52,14 +52,15 @@ namespace DatabasePrototype
             InitializeComponent();
 
             //Init Logger
-            string path = Logger.NewFile(null, true);
+            string path = Logger.NewFile(null, true); 
             //Test
             Logger.LogG("Opened log file at " +path);
             
             //We'll display this log location to the user using a label on our status bar;
             MainStatusLabelLogPath.Content = "Logging To: " + path;
             //Open Db Connection
-            db = ConnectionManager.Open(ConnectionStrings.Marcus);
+            db = ConnectionManager.Open(ConnectionStrings.Prince);
+            
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -116,7 +117,7 @@ namespace DatabasePrototype
             var SearchBar = EmployeesSearchBar;
             //We do the same for every other control
             var SearchBy = EmployeesSearchByComboBox;
-
+           
             SearchBy.SelectionChanged += (obj, sender) =>
             {
                 //Set on change to enable search button, if filterby is untouched

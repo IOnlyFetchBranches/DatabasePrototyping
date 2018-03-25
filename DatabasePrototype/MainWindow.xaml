@@ -34,8 +34,10 @@
                             </TabItem.Header>
                             <Grid HorizontalAlignment="Left" Margin="12,12,0,10" Width="502" Background="#212121">
                                 <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
+                                <TextBox x:Name="StoresFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" IsEnabled="False" />
+                                <CheckBox x:Name="StoresCheckBoxIsDesc" Content="DESC" HorizontalAlignment="Left" Margin="22,215,0,0" VerticalAlignment="Top" Width="63" Foreground="#FFFAFAFA"/>
                                 <Label Content="Search:" HorizontalAlignment="Left" Margin="22,62,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" FontSize="18" Foreground="#FFFAFAFA"/>
-                                <Button x:Name="StoresRunButton" Content="Run" HorizontalAlignment="Left" Margin="417,99,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA"/>
+                                <Button x:Name="StoresRunButton" Content="Run" HorizontalAlignment="Left" Margin="417,104,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA"/>
                                 <Label Background="#FF212121" Content="Stores" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                                 <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                                 <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,157,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
@@ -55,8 +57,9 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <TextBox x:Name="StoresSearchBar" Height="20" Margin="22,101,99,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                                <TextBox x:Name="StoresSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="Type Here or Choose Filter" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
                                 <ComboBox x:Name="StoresSearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -98,7 +101,7 @@
                                 <Label>Home</Label>
                             </TabItem.Header>
                             <!--Be careful to add code to correct position -->
-                            <Grid HorizontalAlignment="Left" Margin="18,48,0,10.2" Width="502" Background="#FF212121" Grid.RowSpan="3">
+                            <Grid HorizontalAlignment="Left" Margin="12 , 12 , 0 , 10" Width="502" Background="#FF212121" Grid.RowSpan="3">
                                 <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
                                 <Label Content="Search:" HorizontalAlignment="Left" Margin="22,62,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" FontSize="18" Foreground="#FFFAFAFA"/>
                                 <Button x:Name="EmployeesRunButton"  Content="Run" HorizontalAlignment="Left" Margin="417,104,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA" IsDefault="True" IsEnabled="False"/>
@@ -167,11 +170,52 @@
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="CustomersGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="137*"/>
+                        <RowDefinition Height="382*"/>
+                    </Grid.RowDefinitions>
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl" Margin="0,0,-0.2,0.2" Grid.RowSpan="2">
                         <TabItem Name="CustomersHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
                             </TabItem.Header>
+                            <Grid HorizontalAlignment="Left" Margin="12,12,0,-26.8" Width="502" Background="#212121">
+                                <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
+                                <TextBox x:Name="CustomersFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" IsEnabled="False" />
+                                <CheckBox x:Name="CustomersCheckBoxIsDesc" Content="DESC" HorizontalAlignment="Left" Margin="22,215,0,0" VerticalAlignment="Top" Width="63" Foreground="#FFFAFAFA"/>
+                                <Label Content="Search:" HorizontalAlignment="Left" Margin="22,62,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" FontSize="18" Foreground="#FFFAFAFA"/>
+                                <Button x:Name="CustomersRunButton" Content="Run" HorizontalAlignment="Left" Margin="417,104,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA"/>
+                                <Label Background="#FF212121" Content="Customers" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="117" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,157,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <ComboBox x:Name="CustomersSortBy" HorizontalAlignment="Left" Margin="22,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <ComboBox x:Name="CustomersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <TextBox x:Name="CustomersSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="Type Here or Choose Filter" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                                <ComboBox x:Name="CustomersSearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <Label x:Name="a1" Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>
@@ -196,6 +240,43 @@
                             <TabItem.Header>
                                 <Label>Home</Label>
                             </TabItem.Header>
+                            <Grid HorizontalAlignment="Left" Margin="12,12,0,-26.8" Width="502" Background="#212121">
+                                <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
+                                <TextBox x:Name="OrdersFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" IsEnabled="False" />
+                                <CheckBox x:Name="OrdersCheckBoxIsDesc" Content="DESC" HorizontalAlignment="Left" Margin="22,215,0,0" VerticalAlignment="Top" Width="63" Foreground="#FFFAFAFA"/>
+                                <Label Content="Search:" HorizontalAlignment="Left" Margin="22,62,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" FontSize="18" Foreground="#FFFAFAFA"/>
+                                <Button x:Name="OrdersRunButton" Content="Run" HorizontalAlignment="Left" Margin="417,104,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA"/>
+                                <Label Background="#FF212121" Content="Orders" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="117" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,157,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <ComboBox x:Name="OrdersSortBy" HorizontalAlignment="Left" Margin="22,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <TextBox x:Name="OrdersSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="Type Here or Choose Filter" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                                <ComboBox x:Name="OrdersSearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <Label Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                            </Grid>
                             <!--Internal Code for this section's home tab goes after here -->
                         </TabItem>
                     </TabControl>
