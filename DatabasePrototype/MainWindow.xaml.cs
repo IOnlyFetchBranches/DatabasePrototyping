@@ -62,7 +62,7 @@ namespace DatabasePrototype
 
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Marcus);
+            db = ConnectionManager.Open(ConnectionStrings.Matt);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -125,7 +125,11 @@ namespace DatabasePrototype
                 //Set on change to enable search button, if filterby is untouched
                 if (!EmployeesFilterOptionBar.IsEnabled)
                     EmployeesRunButton.IsEnabled = true;
-                else
+                if (SearchBar.Text != "" && SearchBy.SelectedIndex == 0)
+                    EmployeesRunButton.IsEnabled = false;
+                if (SearchBy.SelectedIndex == 0 && SearchBar.Text == "")
+                    EmployeesRunButton.IsEnabled = false;
+                else if(SearchBy.SelectedIndex != 0 && SearchBar.Text == "")
                 {
                     EmployeesRunButton.IsEnabled = false;
                 }
