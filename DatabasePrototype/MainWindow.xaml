@@ -144,7 +144,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem Header="Choose..." IsEnabled="False"/>
+                                    
                                     <ComboBoxItem HorizontalContentAlignment="Center">First Name</ComboBoxItem>
                                     <ComboBoxItem HorizontalContentAlignment="Center">Last Name</ComboBoxItem>
                                     <ComboBoxItem HorizontalContentAlignment="Center">EID</ComboBoxItem>
