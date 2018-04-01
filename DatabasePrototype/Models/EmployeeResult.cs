@@ -17,6 +17,7 @@ namespace DatabasePrototype.Models
 
         public string PrimaryMember => _pm;
         public string SecondaryMember => _sm;
+        public string Table => "Employees";
 
 
         /// <summary>
@@ -34,10 +35,20 @@ namespace DatabasePrototype.Models
             _sm = (string) memberStrings[2];
 
         }
-
+        /// <summary>
+        /// Gets the Id Column Name.
+        /// </summary>
+        /// <returns>EID</returns>
         public string IdHeader() => "EID";
-
+        /// <summary>
+        /// Returns first name.
+        /// </summary>
+        /// <returns></returns>
         public string PrimaryHeader() => "FirstName";
+        /// <summary>
+        /// Returns last name.
+        /// </summary>
+        /// <returns></returns>
         public string SecondaryHeader() => "LastName";
     }
 }

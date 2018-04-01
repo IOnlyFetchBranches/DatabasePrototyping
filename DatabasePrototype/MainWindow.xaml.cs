@@ -58,7 +58,10 @@ namespace DatabasePrototype
             
             //We'll display this log location to the user using a label on our status bar;
             MainStatusLabelLogPath.Content = "Logging To: " + path;
-            //Open Db Connection
+
+
+            //TODO:Set your connection string here!
+            //Open Db Connection, only call this once then you can call OpenLast()
             db = ConnectionManager.Open(ConnectionStrings.Marcus);
 
             //Load Functionality for Employees

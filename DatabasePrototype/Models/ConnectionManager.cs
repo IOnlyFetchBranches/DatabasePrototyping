@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DatabasePrototype.Exceptions;
 
 namespace DatabasePrototype.Models
 {
@@ -14,6 +15,8 @@ namespace DatabasePrototype.Models
     {
         //Stores connections for faster load later.
         private static IDictionary<int, SqlConnection> connections = new ConcurrentDictionary<int, SqlConnection>();
+
+        private static String _default;
 
         /// <summary>
         /// Opens or returns a connection, given a Connection String.
@@ -25,6 +28,9 @@ namespace DatabasePrototype.Models
 
             if (connections.ContainsKey(connectionString.GetHashCode()))
                 return connections[connectionString.GetHashCode()];
+
+            if (_default == null)
+                _default = connectionString;
 
 
             try
@@ -41,6 +47,17 @@ namespace DatabasePrototype.Models
                 Application.Current.Shutdown(); //Exit
                 return null;
             }
+        }
+
+        public static SqlConnection OpenLast()
+        {
+            if (_default == null)
+            {
+                throw new IllegalStateException(
+                    "Connection Manager cannnot retrieve unset connection! Call Open() First!");
+            }
+
+            return connections[_default.GetHashCode()];
         }
     }
 }
