@@ -55,7 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Windows\EmployeeDataWindow.xaml.cs">
+      <DependentUpon>EmployeeDataWindow.xaml</DependentUpon>
+    </Compile>
     <Content Include="Questions.txt" />
+    <Page Include="Windows\EmployeeDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Windows\Not The OS...txt" />
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +88,8 @@
   <ItemGroup>
     <Compile Include="Models\ConnectionManager.cs" />
     <Compile Include="Models\ConnectionStrings.cs" />
+    <Compile Include="Models\DataRecord.cs" />
+    <Compile Include="Models\EmployeeDataRecord.cs" />
     <Compile Include="Models\EmployeeResult.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\ResultsTab.cs" />

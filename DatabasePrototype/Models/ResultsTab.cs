@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using dbutils.Models;
+using DatabasePrototype.Windows;
 
 namespace DatabasePrototype.Models
 {
@@ -67,9 +70,29 @@ namespace DatabasePrototype.Models
             resultContainer.MouseDoubleClick += (sender, args) =>
             {
                 var item = (IResult) resultContainer.SelectedItem;
+                var connection = ConnectionManager.OpenLast();
                 try
                 {
-                    MessageBox.Show("Selected: " + item.IdentifyingMember);
+                    //Run query to retrieve row data
+                    var command = new SqlCommand(
+                        "Select * From " + item.Table
+                                         + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember+"'" //Dont forget your '
+                        , connection);
+
+                    var results = command.ExecuteReader();
+                    IDataRecord record;
+
+                    //TODO: Implement DataRecord For each of the five major categories.
+                    switch (item.Table)
+                    {
+                        case "Employees":
+                            //In this case the item was an employee record
+                            record = new EmployeeDataRecord(results,connection);
+                            //TODO:Create a window that accepts Employee Data
+                            new EmployeeDataWindow(record).Show();
+                            break;
+                    }
+
 
                 }
                 catch (NullReferenceException nre)
@@ -185,7 +208,7 @@ namespace DatabasePrototype.Models
             //Set content basing
             rootGrid.Children.Add(resultContainer);
             Content = rootGrid;
-
+            //DEBUG
               MessageBox.Show("Header "+this.Header.GetType() + " grid Items: " + resultContainer.Items.Count );
         }
     }
