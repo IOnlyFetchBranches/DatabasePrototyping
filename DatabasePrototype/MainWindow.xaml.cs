@@ -125,11 +125,7 @@ namespace DatabasePrototype
                 //Set on change to enable search button, if filterby is untouched
                 if (!EmployeesFilterOptionBar.IsEnabled)
                     EmployeesRunButton.IsEnabled = true;
-                if (SearchBar.Text != "" && SearchBy.SelectedIndex == 0)
-                    EmployeesRunButton.IsEnabled = false;
-                if (SearchBy.SelectedIndex == 0 && SearchBar.Text == "")
-                    EmployeesRunButton.IsEnabled = false;
-                else if(SearchBy.SelectedIndex != 0 && SearchBar.Text == "")
+                else if(SearchBy.SelectedIndex == 0 || SearchBar.Text == "")
                 {
                     EmployeesRunButton.IsEnabled = false;
                 }
