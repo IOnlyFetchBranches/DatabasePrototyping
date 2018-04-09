@@ -14,7 +14,7 @@ How long has it been since their last visit with the store?
 Which customers visit the most?
 Monthly?
 Yearly?
-What department do they shop in the most?
+What department do they shop in the most?chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/startpage/startpage.html?section=Speed-dials&activeSpeedDialIndex=0
 Which type of goods do customers purchase mostly?
 
 Marcus-Employees
@@ -24,18 +24,18 @@ Employees with last name X? (EC) (Good) -> G
 Employees at with pay as/between X? (EC) G
 Employees located near zip X? (EC) G?
 Employees with Stocker position? (EC) G
-Employees that have been fired?
+Employees that have been fired? (Matt)
 Employees that Work in X department(EC)
 Employees with salary X? (EC)
 What is Employee X’s ID? (EC)
 What is Employee X’s Emergency Contact? (EEC)
-Phone Number?
-Work Hours?
+Phone Number? (Matt)
+Work Hours? (Matt)
 Employee Terminated sub table?
-What is the EID of the terminated Employee?
-Emergency Contact of the Terminated ID?
+What is the EID of the terminated Employee? (Matt)
+Emergency Contact of the Terminated ID? (Matt)(EC)
 What is the termination Date?
-What is the start date?
+What is the start date? (Matt)
 
 Michael-Departments
 
