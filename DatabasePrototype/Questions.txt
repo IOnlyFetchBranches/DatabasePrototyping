@@ -5,15 +5,15 @@ What orders are shipped the fastest on average?
 Top 10 least popular items ordered?
 What is the order number?
 What is the customer id that links order and customer?
- what is the Customer’s Shipping address for the order?
+ what is the Customer’s Shipping address for the order? (Matt)
 Customer ID?
 Customer first name?
 Customer last name?
 Which customers spend the most?
-How long has it been since their last visit with the store?
+How long has it been since their last visit with the store? (Matt)
 Which customers visit the most?
-Monthly?
-Yearly?
+Monthly? (Matt)(2 versions)
+Yearly? (? no info to pull from)
 What department do they shop in the most?chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/startpage/startpage.html?section=Speed-dials&activeSpeedDialIndex=0
 Which type of goods do customers purchase mostly?
 
@@ -34,7 +34,7 @@ Work Hours? (Matt)
 Employee Terminated sub table?
 What is the EID of the terminated Employee? (Matt)
 Emergency Contact of the Terminated ID? (Matt)(EC)
-What is the termination Date?
+What is the termination Date? (ignore)
 What is the start date? (Matt)
 
 Michael-Departments
