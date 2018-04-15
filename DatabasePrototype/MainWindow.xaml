@@ -7,9 +7,9 @@
         xmlns:messaging="clr-namespace:System.Runtime.Remoting.Messaging;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Prototype" Height="700" Width="700">
-    <Grid>
-        <Label Content="WALLYWORLD" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36" FontFamily="Segoe UI Emoji"/>
-        <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top">
+    <Grid Background="#FF212121">
+        <Label Content="WALLYWORLD" Foreground="#FFFAFAFA" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36" FontFamily="Segoe UI Emoji"/>
+        <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top" Background="#FF212121">
             <TabItem Height="75" Name="TabStores">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -22,12 +22,12 @@
                         <Label>Stores</Label>
                     </StackPanel>
                 </TabItem.Header>
-                <!--This is the beginning of the actual content for a tabitem-->
+                <!--This is the beginning of the actual content for a tabitem , #FF212121  #FFFAFAFA-->
 
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="StoresGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="StoresTabControl" Margin="0,0,-0.2,0.2">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="StoresTabControl" Margin="0,0,-0.2,0.2" Background="#FF212121">
                         <TabItem Name="StoresHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -99,7 +99,7 @@
                         <RowDefinition Height="55*"/>
                         <RowDefinition Height="413*"/>
                     </Grid.RowDefinitions>
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="EmployeesTabControl" Margin="0,0,0.4,0.2" Grid.RowSpan="3">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="EmployeesTabControl" Margin="0,0,0.4,0.2" Grid.RowSpan="3" Background="#FF212121">
                         <TabItem Name="EmployeesHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -178,7 +178,7 @@
                         <RowDefinition Height="137*"/>
                         <RowDefinition Height="382*"/>
                     </Grid.RowDefinitions>
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl" Margin="0,0,-0.2,0.2" Grid.RowSpan="2">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl" Margin="0,0,-0.2,0.2" Grid.RowSpan="2" Background="#FF212121">
                         <TabItem Name="CustomersHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -250,7 +250,7 @@
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="OrdersGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="OrdersTabControl">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="OrdersTabControl" Background="#FF212121">
                         <TabItem Name="OrdersHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -272,7 +272,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                                <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>

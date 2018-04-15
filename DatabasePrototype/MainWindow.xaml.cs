@@ -434,7 +434,7 @@ namespace DatabasePrototype
                 //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
                 //50 Questions handled
 
-                //joinList.Add("Zip", "EmployeeContacts");
+                joinList.Add("Total", "Orders");
 
                 //Declare Controls to a generic name;
                 //That way we can resuse most of this logic by just assigning the proper control here.
@@ -518,8 +518,8 @@ namespace DatabasePrototype
                         orderByChoice = orderByChoice.Replace(" ", "");
 
                         //If you have any 'facade names' that is , inputs that don't share the same screen name as the column name, handle that here
-                        if (filterByChoice == "ZipCode")
-                            filterByChoice = "Zip"; //Change to the shortened form
+                        if (filterByChoice == "Top Purchase")
+                            filterByChoice = "Total"; //Change to the shortened form
 
                         //Build Query
                         //Hopefully the only part we'll have to hardcode
@@ -733,7 +733,7 @@ namespace DatabasePrototype
             string mainTable = "Orders";
             //Declare column names to a generic name
             string id = "OID";
-            string primaryColumn = "PurchaseDate;
+            string primaryColumn = "PurchaseDate";
             string secondaryColumn = "CID";
 
 
@@ -756,40 +756,40 @@ namespace DatabasePrototype
 
             //Declare Controls to a generic name;
             //That way we can resuse most of this logic by just assigning the proper control here.
-            var SearchBar = CustomersSearchBar;
+            var SearchBar = OrdersSearchBar;
             //We do the same for every other control
-            var SearchBy = CustomersSearchBy;
+            var SearchBy = OrdersSearchBy;
 
             SearchBy.SelectionChanged += (obj, sender) =>
             {
                 //Set on change to enable search button, if filterby is untouched
-                if (!CustomersFilterOptionBar.IsEnabled)
-                    CustomersRunButton.IsEnabled = true;
+                if (!OrdersFilterOptionBar.IsEnabled)
+                    OrdersRunButton.IsEnabled = true;
                 else
                 {
-                    CustomersRunButton.IsEnabled = false;
+                    OrdersRunButton.IsEnabled = false;
                 }
             };
 
-            var OrderBy = CustomersSortBy;
+            var OrderBy = OrdersSortBy;
 
 
 
-            var FilterBy = CustomersFilterBy;
+            var FilterBy = OrdersFilterBy;
 
             //Acts as a filter
             FilterBy.SelectionChanged += (obj, sender) =>
             {
                 //Set on change to enable filter box if not enabled
-                if (!CustomersFilterOptionBar.IsEnabled)
-                    CustomersFilterOptionBar.IsEnabled = true;
+                if (!OrdersFilterOptionBar.IsEnabled)
+                    OrdersFilterOptionBar.IsEnabled = true;
 
-                if (CustomersRunButton.IsEnabled)
-                    CustomersRunButton.IsEnabled = false;
+                if (OrdersRunButton.IsEnabled)
+                    OrdersRunButton.IsEnabled = false;
 
             };
 
-            var RunButton = CustomersRunButton;
+            var RunButton = OrdersRunButton;
 
             //Remember to set default button for each home tab, so that enter will trigger.
             RunButton.IsDefault = true;
@@ -801,7 +801,7 @@ namespace DatabasePrototype
                 if (true)
                 {
                     //SANITIZATION SECTION
-                    var sanitizedText = CustomersSearchBar.Text;
+                    var sanitizedText = OrdersSearchBar.Text;
 
                     int spaces = 0; //TrackSpaces 
 
@@ -1086,5 +1086,9 @@ namespace DatabasePrototype
 
         }
 
+        private void OrdersFilterBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

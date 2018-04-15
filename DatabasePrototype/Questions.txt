@@ -5,7 +5,7 @@ What orders are shipped the fastest on average?
 Top 10 least popular items ordered?
 What is the order number?
 What is the customer id that links order and customer?
- what is the Customer’s Shipping address for the order?
+What is the Customer’s Shipping address for the order?
 Customer ID?
 Customer first name?
 Customer last name?
