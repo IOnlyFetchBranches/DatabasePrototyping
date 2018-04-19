@@ -147,6 +147,8 @@ namespace DatabasePrototype
                 if (EmployeesRunButton.IsEnabled)
                     EmployeesRunButton.IsEnabled = false;
 
+                if (FilterBy.SelectedIndex == 0)
+                    EmployeesFilterOptionBar.IsEnabled = false;
             };
 
             var RunButton = EmployeesRunButton;
