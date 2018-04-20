@@ -125,10 +125,11 @@ namespace DatabasePrototype
                 //Set on change to enable search button, if filterby is untouched
                 if (!EmployeesFilterOptionBar.IsEnabled)
                     EmployeesRunButton.IsEnabled = true;
-                else if(SearchBy.SelectedIndex == 0 || SearchBar.Text == "")
+                if(SearchBar.Text == "")
                 {
                     EmployeesRunButton.IsEnabled = false;
                 }
+
             };
 
             var OrderBy = EmployeesSortByComboBox;
@@ -148,7 +149,12 @@ namespace DatabasePrototype
                     EmployeesRunButton.IsEnabled = false;
 
                 if (FilterBy.SelectedIndex == 0)
+                {
                     EmployeesFilterOptionBar.IsEnabled = false;
+                    if (SearchBar.SelectedText == "")
+                    EmployeesRunButton.IsEnabled = true;
+                }
+
             };
 
             var RunButton = EmployeesRunButton;
