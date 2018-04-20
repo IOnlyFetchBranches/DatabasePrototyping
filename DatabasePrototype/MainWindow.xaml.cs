@@ -132,10 +132,11 @@ namespace DatabasePrototype
                 //Set on change to enable search button, if filterby is untouched
                 if (!EmployeesFilterOptionBar.IsEnabled)
                     EmployeesRunButton.IsEnabled = true;
-                else if(SearchBy.SelectedIndex == 0 || SearchBar.Text == "")
+                if(SearchBar.Text == "")
                 {
                     EmployeesRunButton.IsEnabled = false;
                 }
+
             };
 
             var OrderBy = EmployeesSortByComboBox;
@@ -155,7 +156,12 @@ namespace DatabasePrototype
                     EmployeesRunButton.IsEnabled = false;
 
                 if (FilterBy.SelectedIndex == 0)
+                {
                     EmployeesFilterOptionBar.IsEnabled = false;
+                    if (SearchBar.SelectedText == "")
+                    EmployeesRunButton.IsEnabled = true;
+                }
+
             };
 
             var RunButton = EmployeesRunButton;
@@ -1047,12 +1053,13 @@ namespace DatabasePrototype
 
 
         }
+
         private void IntitializeInventory() {
             //Set generic table name
             string mainTable = "Inventory";
             //Declare column names to a generic name
             string id = "InvID";
-            string primaryColumn = "InvID";
+            string primaryColumn = "DPRTName";
             string secondaryColumn = "DID";
 
 
@@ -1060,7 +1067,7 @@ namespace DatabasePrototype
             //The keys in this dictionary represent a selection value, such as Zipcode
             //The values are the table that would be needed to retireve this value, For zip thats EmployeeContacts
             //We could check contains<Selection value> and them automatically append the correct table to the join statement?
-            Dictionary<string, string> joinList = new Dictionary<string, string>();
+            Dictionary<string, string[]> joinList = new Dictionary<string, string[]>();
 
             //Add conditions, remeber these are just column names that you need to account for.
             //Good example, even though i show ZipCode to the user, We sanitize that to a proper column name "Zip"
@@ -1071,7 +1078,7 @@ namespace DatabasePrototype
             //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
             //50 Questions handled
 
-            joinList.Add("Zip", "EmployeeContacts");
+            joinList.Add("DPRTName", new String[]{"DID","Departments"});
 
             //Declare Controls to a generic name;
             //That way we can resuse most of this logic by just assigning the proper control here.
@@ -1170,14 +1177,19 @@ namespace DatabasePrototype
                     //All joins will be done by some sort of ID
 
                     //conditionals for all entries that will require touching another table and making sure that table is accounted for
+
+                    //On <jtable>.<idvalue> = <maintable>.<idvalue>
+                    var onStatement = " "; //Leave empty by default
                     if (joinList.ContainsKey(filterByChoice))
                     {
-                        //On <jtable>.<idvalue> = <maintable>.<idvalue>
-                        var onStatement = " On " + joinList[filterByChoice] + "." + id + " = " + mainTable + "." + id;
+                       onStatement = " On " + joinList[filterByChoice][1] + "." + joinList[filterByChoice][0] + " = " + mainTable + "." + joinList[filterByChoice][0];
                         // <maintabl> , <jtable> + [OnStatement]
                         joinStatement += " join " + joinList[filterByChoice] + " " + onStatement + " ";
 
                     }
+
+                    //Add the join statement for the DPRTNAme
+                    joinStatement += " join " + joinList[primaryColumn] + " On Inventory.DID = Departments.DID ";
 
                     string fromStatement = " From " + mainTable + " " + joinStatement;
                     //Explanation for +Maintable + "." + id, To prevent ambiguous column name in case of join
@@ -1206,28 +1218,16 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        throw new IllegalStateException("Error in Employee query generation conditional logic.");
+                        throw new IllegalStateException("Error in Inventory query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
                     string orderStatement = "";
 
 
-                    if (OrderBy.SelectedIndex == 1)
-                    {
-                        //This would be the full name;
-                        if (EmployeesCheckBoxIsDesc.IsChecked != null && (bool)EmployeesCheckBoxIsDesc.IsChecked)
-                        {
-                            //If they want it desc
-                            orderStatement = " Order By FirstName Desc, LastName Desc";
-                        }
-                        else
-                        {
-                            orderStatement = " Order By FirstName, LastName";
-                        }
 
-                    }
-                    else if (OrderBy.SelectedIndex != -1)
+        
+                    if (OrderBy.SelectedIndex != -1)
                     {
                         //anything other than full name
                         if (EmployeesCheckBoxIsDesc.IsChecked != null && (bool)EmployeesCheckBoxIsDesc.IsChecked)
@@ -1244,7 +1244,7 @@ namespace DatabasePrototype
                     //NOW WEBUILD THE QUERY
 
                     //QUERY
-                    SqlCommand GetEmployees = new SqlCommand(
+                    SqlCommand GetInventory = new SqlCommand(
                                //Do not forget to space after each statement
                                //Although I've already added proper spacing in the statements themselves
                                //Data we will be returning
@@ -1258,17 +1258,17 @@ namespace DatabasePrototype
                                );
                     //Debug ops, and for easy referencing later.
                     Logger.LogG("SqlCommand",
-                        "Created query:" + Environment.NewLine + GetEmployees.CommandText + Environment.NewLine);
+                        "Created query:" + Environment.NewLine + GetInventory.CommandText + Environment.NewLine);
 
                     //You must link the connection, maybe we can create a connection wrapper that does this for us.
                     //You could also pass as second param in constructor but the idea would be to have it link automatically
                     //It could grab the db connection from the Connection Manager.
-                    GetEmployees.Connection = db;
+                    GetInventory.Connection = db;
 
                     try
                     {
                         //Launch Command, Returns a Reader on the result table
-                        var results = GetEmployees.ExecuteReader();
+                        var results = GetInventory.ExecuteReader();
 
                         //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
                         var resultsTab = new ResultsTab();
