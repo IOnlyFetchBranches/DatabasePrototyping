@@ -71,6 +71,11 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem Content="StoreID"/>
+                                    <ComboBoxItem Content="State"/>
+                                    <ComboBoxItem Content="City"/>
+                                    <ComboBoxItem Content="Zip"/>
                                 </ComboBox>
                                 <Label x:Name="a" Content="Search By" HorizontalAlignment="Left" Margin="103,74.07,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
                             </Grid>
@@ -149,7 +154,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    
+
                                     <ComboBoxItem HorizontalContentAlignment="Center">First Name</ComboBoxItem>
                                     <ComboBoxItem HorizontalContentAlignment="Center">Last Name</ComboBoxItem>
                                     <ComboBoxItem HorizontalContentAlignment="Center">EID</ComboBoxItem>
@@ -290,6 +295,12 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem Content="Purchase Date"/>
+                                    <ComboBoxItem Content="OID"/>
+                                    <ComboBoxItem Content="CID"/>
+                                    <ComboBoxItem Content="Cust First Name"/>
+                                    <ComboBoxItem Content="Cust Last Name"/>
                                 </ComboBox>
                                 <Label Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                             </Grid>
@@ -351,6 +362,9 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem Content="itemName"/>
+                                    <ComboBoxItem Content="LastRestocked"/>
                                 </ComboBox>
                                 <Label Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                             </Grid>
@@ -364,7 +378,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                     </TabControl>
                 </Grid>
 
