@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:DatabasePrototype"
         xmlns:messaging="clr-namespace:System.Runtime.Remoting.Messaging;assembly=mscorlib"
         mc:Ignorable="d"
+        Background="#FF212121"
         Title="Prototype" Height="700" Width="700">
-    <Grid>
-        <Label Content="WALLYWORLD" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36" FontFamily="Segoe UI Emoji"/>
-        <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top">
+    <Grid Background="#FF212121">
+        <Label Content="WALLYWORLD" Foreground="#FFFAFAFA" Margin="100,5,122,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="65" FontSize="36" FontFamily="Segoe UI Emoji"/>
+        <TabControl Name="MainTabControl" TabStripPlacement="Left" Height="525" Margin="35,90,42,0" VerticalAlignment="Top" Background="#FF212121">
             <TabItem Height="75" Name="TabStores">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -22,12 +23,12 @@
                         <Label>Stores</Label>
                     </StackPanel>
                 </TabItem.Header>
-                <!--This is the beginning of the actual content for a tabitem-->
+                <!--This is the beginning of the actual content for a tabitem , #FF212121  #FFFAFAFA-->
 
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="StoresGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="StoresTabControl" Margin="0,0,-0.2,0.2">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="StoresTabControl" Margin="0,0,-0.2,0.2" Background="#FF212121">
                         <TabItem Name="StoresHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -99,7 +100,7 @@
                         <RowDefinition Height="55*"/>
                         <RowDefinition Height="413*"/>
                     </Grid.RowDefinitions>
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="EmployeesTabControl" Margin="0,0,0.4,0.2" Grid.RowSpan="3">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="EmployeesTabControl" Margin="0,0,0.4,0.2" Grid.RowSpan="3" Background="#FF212121">
                         <TabItem Name="EmployeesHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -178,7 +179,7 @@
                         <RowDefinition Height="137*"/>
                         <RowDefinition Height="382*"/>
                     </Grid.RowDefinitions>
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl" Margin="0,0,-0.2,0.2" Grid.RowSpan="2">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="CustomersTabControl" Margin="0,0,-0.2,0.2" Grid.RowSpan="2" Background="#FF212121">
                         <TabItem Name="CustomersHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -250,7 +251,7 @@
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="OrdersGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="OrdersTabControl">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="OrdersTabControl" Background="#FF212121">
                         <TabItem Name="OrdersHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
@@ -272,7 +273,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714">
+                                <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -311,20 +312,66 @@
                 <!--Please keep an effective naming scheme for controls!-->
                 <!-- I typically follow the pattern <WhatitBelongsto><WhatItIs>-->
                 <Grid Name="InventoryGrid">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="InventoryTabControl">
+                    <TabControl SelectionChanged="TabControl_SelectionChanged" Name="InventoryTabControl" Background="#FF212121">
                         <TabItem Name="InventoryHomeTab">
                             <TabItem.Header>
                                 <Label>Home</Label>
                             </TabItem.Header>
+                            <Grid HorizontalAlignment="Left" Margin="12,12,0,-26.8" Width="502" Background="#212121">
+                                <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,101,0,0"/>
+                                <TextBox x:Name="InventoryFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" IsEnabled="False" />
+                                <CheckBox x:Name="InventoryCheckBoxIsDesc" Content="DESC" HorizontalAlignment="Left" Margin="22,215,0,0" VerticalAlignment="Top" Width="63" Foreground="#FFFAFAFA"/>
+                                <Label Content="Search:" HorizontalAlignment="Left" Margin="22,62,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" FontSize="18" Foreground="#FFFAFAFA"/>
+                                <Button x:Name="InventoryRunButton" Content="Run" HorizontalAlignment="Left" Margin="417,104,0,0" VerticalAlignment="Top" Width="75" FontFamily="Segoe UI Emoji" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#FFFAFAFA"/>
+                                <Label Background="#FF212121" Content="Inventory" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="117" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,157,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <ComboBox x:Name="InventorySortBy" HorizontalAlignment="Left" Margin="22,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <ComboBox x:Name="InventoryFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <TextBox x:Name="InventorySearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="Type Here or Choose Filter" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
+                                <ComboBox x:Name="InventorySearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
+
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="#FFFAFAFA" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <Label Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                            </Grid>
                             <!--Internal Code for this section's home tab goes after here -->
+
                         </TabItem>
+                        <ListView Height="100" Width="100">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        
                     </TabControl>
                 </Grid>
 
             </TabItem>
         </TabControl>
-        <StatusBar x:Name="MainStatusBar" Margin="0,630,0,0" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left">
-            <StatusBarItem VerticalContentAlignment="Top" Height="39" VerticalAlignment="Bottom">
+        <StatusBar x:Name="MainStatusBar" Margin="0,630,0,0" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left" Background="#FF212121">
+            <StatusBarItem VerticalContentAlignment="Top" Height="39" VerticalAlignment="Bottom" Background="#FF212121">
                 <Label VerticalContentAlignment="Center" Name="MainStatusLabelLogPath" />
             </StatusBarItem>
         </StatusBar>
