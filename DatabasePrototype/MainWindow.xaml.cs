@@ -58,10 +58,7 @@ namespace DatabasePrototype
             
             //We'll display this log location to the user using a label on our status bar;
             MainStatusLabelLogPath.Content = "Logging To: " + path;
-            //Open Db Connection
-            db = ConnectionManager.Open(ConnectionStrings.Prince);
-
-
+           
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
             db = ConnectionManager.Open(ConnectionStrings.Marcus);
@@ -1056,12 +1053,17 @@ namespace DatabasePrototype
 
         private void IntitializeInventory() {
             //Set generic table name
-            string mainTable = "Inventory";
+            string mainTable = "InventoryInfo";
             //Declare column names to a generic name
             string id = "InvID";
-            string primaryColumn = "DPRTName";
-            string secondaryColumn = "DID";
+            string primaryColumn = "ItemID";
+            string secondaryColumn = "Quantity";
 
+            //One way for doing bounds, keep a list of values that can be bounded
+            List<string> BoundedVals = new List<string>();
+
+            BoundedVals.Add("Quantity");
+            BoundedVals.Add("Price");
 
             //One way of doing dynamic joins?
             //The keys in this dictionary represent a selection value, such as Zipcode
@@ -1078,7 +1080,10 @@ namespace DatabasePrototype
             //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
             //50 Questions handled
 
-            joinList.Add("DPRTName", new String[]{"DID","Departments"});
+            joinList.Add("[Name]",new string[]{"ItemID","Items"});
+
+   
+            //TODO: Add logic to enable/disable fields to help prevent incorrect queries.
 
             //Declare Controls to a generic name;
             //That way we can resuse most of this logic by just assigning the proper control here.
@@ -1086,36 +1091,33 @@ namespace DatabasePrototype
             //We do the same for every other control
             var SearchBy = InventorySearchBy;
 
-            SearchBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable search button, if filterby is untouched
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesRunButton.IsEnabled = true;
-                else if (SearchBy.SelectedIndex == 0 || SearchBar.Text == "")
-                {
-                    EmployeesRunButton.IsEnabled = false;
-                }
-            };
-
-            var OrderBy = EmployeesSortByComboBox;
+            var OrderBy = InventorySortBy;
 
 
 
-            var FilterBy = EmployeesFilterByComboBox;
+            var FilterBy = InventoryFilterBy;
 
-            //Acts as a filter
-            FilterBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable filter box if not enabled
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesFilterOptionBar.IsEnabled = true;
+        
 
-                if (EmployeesRunButton.IsEnabled)
-                    EmployeesRunButton.IsEnabled = false;
+            //Handle our bounds here.
+            var Bound1 = Inventory_Bound1;
+            var Bound2 = Inventory_Bound2;
 
-            };
+            var BoundBox1 = Inventory_BoundBox1;
+            var BoundBox2 = Inventory_BoundBox2;
 
-            var RunButton = EmployeesRunButton;
+            //Define button
+            var RunButton = InventoryRunButton;
+
+
+            
+
+
+
+
+
+            //Set logic for 
+
 
             //Remember to set default button for each home tab, so that enter will trigger.
             RunButton.IsDefault = true;
@@ -1127,7 +1129,7 @@ namespace DatabasePrototype
                 if (true)
                 {
                     //SANITIZATION SECTION
-                    var sanitizedText = EmployeesSearchBar.Text;
+                    var sanitizedText = InventorySearchBar.Text;
 
                     int spaces = 0; //TrackSpaces 
 
@@ -1161,14 +1163,24 @@ namespace DatabasePrototype
                     filterByChoice = filterByChoice.Replace(" ", "");
                     orderByChoice = orderByChoice.Replace(" ", "");
 
-                    //If you have any 'facade names' that is , inputs that don't share the same screen name as the column name, handle that here
-                    if (filterByChoice == "ZipCode")
-                        filterByChoice = "Zip"; //Change to the shortened form
+                    //Add brackets for keyworded names
+                    filterByChoice = "[" + filterByChoice + "]";
 
+                    searchByChoice = "[" + searchByChoice + "]";
+
+                    orderByChoice = "[" + orderByChoice + "]";
+
+                    //If you have any 'facade names' that is , inputs that don't share the same screen name as the column name, handle that here
+                   
                     //Build Query
                     //Hopefully the only part we'll have to hardcode
 
                     //STATEMENT SECTION
+                    //header section
+
+
+                
+
 
                     string joinStatement = "";
                     //now join statement needs to be empty by default
@@ -1184,22 +1196,49 @@ namespace DatabasePrototype
                     {
                        onStatement = " On " + joinList[filterByChoice][1] + "." + joinList[filterByChoice][0] + " = " + mainTable + "." + joinList[filterByChoice][0];
                         // <maintabl> , <jtable> + [OnStatement]
-                        joinStatement += " join " + joinList[filterByChoice] + " " + onStatement + " ";
+                        joinStatement += " join " + joinList[filterByChoice][1] + " " + onStatement + " ";
 
                     }
 
-                    //Add the join statement for the DPRTNAme
-                    joinStatement += " join " + joinList[primaryColumn] + " On Inventory.DID = Departments.DID ";
+                    if (joinList.ContainsKey(searchByChoice))
+                    {
+                        onStatement = " On " + joinList[searchByChoice][1] + "." + joinList[searchByChoice][0] + " = " + mainTable + "." + joinList[searchByChoice][0];
+                        // <maintabl> , <jtable> + [OnStatement]
+                        joinStatement += " join " + joinList[searchByChoice][1] + " " + onStatement + " ";
+
+                    }
+                    
+
+
+
+
 
                     string fromStatement = " From " + mainTable + " " + joinStatement;
                     //Explanation for +Maintable + "." + id, To prevent ambiguous column name in case of join
-                    string selectionStatement = "Select " + mainTable + "." + id + "," + primaryColumn + ", " + secondaryColumn + " " + fromStatement;
+                    string selectionStatement = "Select " + mainTable + "." + id + "," + mainTable+"." + primaryColumn + ", " + mainTable +"." + secondaryColumn + " " + fromStatement;
                     //The "And" Part of the where OR the WHOLE where if there is no search by chosen.
                     string filterStatement = ""; //triggered if filter by is on
 
-                    if (EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar.Text.Length > 0)
+                    if (InventoryFilterOptionBar.IsEnabled && InventoryFilterOptionBar.Text.Length > 0 
+                            && Inventory_Bound1.IsEnabled == false)
                     {
-                        filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
+                        filterStatement = " And " + filterByChoice + " = '" + InventoryFilterOptionBar.Text + "'";
+                    }
+                    //User has chosen something that requires or can have a bound
+                    else if (Inventory_Bound1.IsEnabled && Inventory_BoundBox1.Text.Length >0)
+                    {
+                        //If a box hax been selected that requires a bound
+                        filterStatement = " And " + filterByChoice + " " + Inventory_Bound1.Text + " " +
+                                          Inventory_BoundBox1.Text;
+
+                        //Check if a secondary bound has been set
+                        if (Inventory_BoundBox2.IsEnabled && Inventory_BoundBox2.Text.Length > 0)
+                        {
+                            //Attach the secondary bound
+                            filterStatement += " And " + filterByChoice + " " + Inventory_Bound2.Text + " " +
+                                               Inventory_BoundBox2.Text;
+                        }
+                       
                     }
 
 
@@ -1230,7 +1269,7 @@ namespace DatabasePrototype
                     if (OrderBy.SelectedIndex != -1)
                     {
                         //anything other than full name
-                        if (EmployeesCheckBoxIsDesc.IsChecked != null && (bool)EmployeesCheckBoxIsDesc.IsChecked)
+                        if (InventoryCheckBoxIsDesc.IsChecked != null && (bool)InventoryCheckBoxIsDesc.IsChecked)
                         {
                             //If they want it desc
                             orderStatement = " Order By " + orderByChoice + " Desc";
@@ -1245,10 +1284,9 @@ namespace DatabasePrototype
 
                     //QUERY
                     SqlCommand GetInventory = new SqlCommand(
-                               //Do not forget to space after each statement
-                               //Although I've already added proper spacing in the statements themselves
+                               //Do not forget to space after each statement "if hardcoding" statements should already be properly spaced!
                                //Data we will be returning
-                               selectionStatement +
+                               selectionStatement + 
                                //Yes for inserted strings, that you want to be evaluated in sql as string
                                //You still have to concat the ' before AND after!
                                whereStatement +
@@ -1274,10 +1312,9 @@ namespace DatabasePrototype
                         var resultsTab = new ResultsTab();
 
 
-
                         while (results.Read())
                         {
-                            var result = new EmployeeResult(results[0], results[1], results[2]); //Create new result with an EMPLOYEE Context.
+                            var result = new InventoryResult(results[0], results[1], results[2]); //Create new result with an INVENTORY Context.
                             resultsTab.Add(result);
                         }
 
@@ -1288,7 +1325,7 @@ namespace DatabasePrototype
 
                         //How many other result tabs are open?
                         int count = 1; //init the counter
-                        foreach (object tab in EmployeesTabControl.Items)
+                        foreach (object tab in InventoryTabControl.Items)
                         {
                             if (tab is ResultsTab)
                                 count++;
@@ -1297,14 +1334,14 @@ namespace DatabasePrototype
                         //PREPARE the tab BEFORE adding to the MasterTab's TabControl.
                         resultsTab.Prepare("Results " + count);
                         //Add to tabcontrol.
-                        EmployeesTabControl.Items.Add(resultsTab);
+                        InventoryTabControl.Items.Add(resultsTab);
 
                         //Switch to new tab, for pazzaz really, but it makes sense.
                         //ie when a user searches, you expect to be brought to the results
                         //imagine if google opened it's results in a new tab and made you switch to it
                         //or when you rightclick and issue an  open in new tab command , you have to manually click the tab
                         //it wouldn't make any sense, so don't forget to always do this.
-                        EmployeesTabControl.SelectedIndex = EmployeesTabControl.Items.Count - 1;
+                        InventoryTabControl.SelectedIndex = InventoryTabControl.Items.Count - 1;
 
 
                     }
@@ -1322,9 +1359,9 @@ namespace DatabasePrototype
 
             };
             //Filter drop down
-            var FilterOptions = EmployeesFilterOptionBar;
+            var FilterOptions = InventoryFilterOptionBar;
             //Enables/Disables submit button
-            EmployeesFilterOptionBar.TextChanged += (obj, sender) =>
+            FilterOptions.TextChanged += (obj, sender) =>
             {
                 if (FilterOptions.Text.Length > 1)
                 {
@@ -1343,14 +1380,14 @@ namespace DatabasePrototype
             SearchBar.TextChanged += (sender, args) =>
             {
                 if (SearchBar.Text.Length == 0)
-                    EmployeesRunButton.IsEnabled = false;
+                    RunButton.IsEnabled = false;
                 //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !EmployeesFilterOptionBar.IsEnabled)
+                else if (SearchBy.SelectedItem != null && !FilterOptions.IsEnabled)
                 {
                     RunButton.IsEnabled = true;
                 }
                 //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar?.Text.Length > 0)
+                else if (SearchBy.SelectedItem != null && FilterOptions.IsEnabled && FilterOptions?.Text.Length > 0)
                 {
                     RunButton.IsEnabled = true;
                 }

@@ -70,26 +70,52 @@ namespace DatabasePrototype.Models
             resultContainer.MouseDoubleClick += (sender, args) =>
             {
                 var item = (IResult) resultContainer.SelectedItem;
+                //Open a connection to the DB
                 var connection = ConnectionManager.OpenLast();
                 try
                 {
                     //Run query to retrieve row data
-                    var command = new SqlCommand(
-                        "Select * From " + item.Table
-                                         + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember+"'" //Dont forget your '
-                        , connection);
-
-                    var results = command.ExecuteReader();
+                   
                     IDataRecord record;
 
                     //TODO: Implement DataRecord For each of the five major categories.
+                    SqlCommand command;
+                    SqlDataReader results;
                     switch (item.Table)
                     {
                         case "Employees":
+                            command = new SqlCommand(
+                                "Select * From " + item.Table
+                                                 + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember + "'" //Dont forget your '
+                                , connection);
+
+                            results = command.ExecuteReader();
                             //In this case the item was an employee record
                             record = new EmployeeDataRecord(results,connection);
                             //TODO:Create a window that accepts Employee Data
                             new EmployeeDataWindow(record).Show();
+                            break;
+
+                        case "Customers":
+                             command = new SqlCommand(
+                                "Select * From " + item.Table
+                                                 + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember + "'" //Dont forget your '
+                                , connection);
+
+                             results = command.ExecuteReader();
+                            record = new CustomerDataRecord(results, connection);
+                            new CustomerDataWindow(record).Show();
+                            break;
+
+                        case "InventoryInfo":
+                            command = new SqlCommand(
+                                "Select * From " + item.Table
+                                                 + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember + "'" //Dont forget your '
+                                , connection);
+
+                            results = command.ExecuteReader();
+                            record = new InventoryDataRecord(results, connection);
+                            new InventoryDataWindow(record).Show();
                             break;
                     }
 

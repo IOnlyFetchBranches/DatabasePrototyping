@@ -55,12 +55,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\CustomerDataRecord.cs" />
     <Compile Include="Models\CustomerResult.cs" />
+    <Compile Include="Models\InventoryDataRecord.cs" />
+    <Compile Include="Models\InventoryResult.cs" />
+    <Compile Include="Windows\CustomerDataWindow.xaml.cs">
+      <DependentUpon>CustomerDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\EmployeeDataWindow.xaml.cs">
       <DependentUpon>EmployeeDataWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\InventoryDataWindow.xaml.cs">
+      <DependentUpon>InventoryDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ItemDataWindow.xaml.cs">
+      <DependentUpon>ItemDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\StoreCardDataWindow.xaml.cs">
+      <DependentUpon>StoreCardDataWindow.xaml</DependentUpon>
+    </Compile>
     <Content Include="Questions.txt" />
+    <Page Include="Windows\CustomerDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\EmployeeDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InventoryDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ItemDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\StoreCardDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
