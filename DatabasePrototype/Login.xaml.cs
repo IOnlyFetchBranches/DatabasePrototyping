@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -30,10 +31,7 @@ namespace DatabasePrototype
             InitializeComponent();
 
             //Store terrible easy login info [securely] for testing ease
-            users.Add("admin",
-                Convert.ToBase64String(
-                    new SHA256Managed().ComputeHash(
-                        Encoding.ASCII.GetBytes("password"))));
+            SqlCommand getUsers = new SqlCommand("SELECT * FROM");
             //MAKE sure that the password entry is a PasswordBox
             //Also Set the max text to 16
             LoginUserPassword.MaxLength = 16;

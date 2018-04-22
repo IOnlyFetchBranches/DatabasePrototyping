@@ -131,6 +131,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <ComboBoxItem/>
+                                    <ComboBoxItem Content="Full Name" ContentStringFormat=""/>
                                     <ComboBoxItem HorizontalContentAlignment="Center" Content="EID"/>
                                     <ComboBoxItem HorizontalContentAlignment="Center" Content="First Name"/>
                                     <ComboBoxItem HorizontalContentAlignment="Center" Content="Last Name"/>
@@ -212,6 +213,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <ComboBoxItem/>
+                                    <ComboBoxItem Content="Full Name"/>
                                     <ComboBoxItem Content="CID" Cursor="Cross"/>
                                     <ComboBoxItem Content="First Name"/>
                                     <ComboBoxItem Content="Last Name"/>
