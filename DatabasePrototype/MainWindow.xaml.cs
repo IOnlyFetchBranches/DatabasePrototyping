@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Matt);
+            db = ConnectionManager.Open(ConnectionStrings.Prince);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -232,7 +232,9 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        throw new IllegalStateException("Error in Employee query generation conditional logic.");
+                        MessageBox.Show("Enter a valid Employee query.");
+                        return;
+                      //throw new IllegalStateException("Error in Employee query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
@@ -486,7 +488,9 @@ namespace DatabasePrototype
                         }
                         else
                         {
-                            throw new IllegalStateException("Error in Customer query generation conditional logic.");
+                            MessageBox.Show("Enter a valid Customer query.");
+                            return;
+                            //throw new IllegalStateException("Error in Customer query generation conditional logic.");
                         }
 
                         //This is the final part of our query, the order statement
@@ -1176,7 +1180,9 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        throw new IllegalStateException("Error in Inventory query generation conditional logic.");
+                        MessageBox.Show("Enter a valid Inventory query.");
+                        return;
+                       // throw new IllegalStateException("Error in Inventory query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
