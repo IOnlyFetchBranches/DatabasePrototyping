@@ -338,7 +338,7 @@ namespace DatabasePrototype.Models
             _query = _rawQuery;
             
             //DEBUG
-            MessageBox.Show("Built query:\n" + _query);
+            //MessageBox.Show("Built query:\n" + _query);
             Logger.LogG(TAG, "Built Query:\n" + _query);
         }
 
