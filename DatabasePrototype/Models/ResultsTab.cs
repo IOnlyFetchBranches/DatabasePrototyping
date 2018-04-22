@@ -164,8 +164,7 @@ namespace DatabasePrototype.Models
                     resultGrid.Columns[1].Header = item.PrimaryHeader();
                     resultGrid.Columns[2].Header = item.SecondaryHeader();
 
-                    MessageBox.Show("Added " + item.IdentifyingMember + " " + item.PrimaryMember + " " +
-                                    item.SecondaryMember);
+                    //MessageBox.Show("Added " + item.IdentifyingMember + " " + item.PrimaryMember + " " + item.SecondaryMember);
                 }
 
                 resultContainer.Items.Add(item);
@@ -249,7 +248,7 @@ namespace DatabasePrototype.Models
             rootGrid.Children.Add(resultContainer);
             Content = rootGrid;
             //DEBUG
-              MessageBox.Show("Header "+this.Header.GetType() + " grid Items: " + resultContainer.Items.Count );
+            //MessageBox.Show("Header "+this.Header.GetType() + " grid Items: " + resultContainer.Items.Count );
         }
     }
 }

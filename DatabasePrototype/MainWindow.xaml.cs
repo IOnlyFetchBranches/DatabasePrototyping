@@ -973,6 +973,9 @@ namespace DatabasePrototype
             joinList.Add(secondaryColumn,new string[]{"ItemId","Items"});
             
 
+          
+
+
 
             //TODO: Add logic to enable/disable fields to help prevent incorrect queries.
 
@@ -1007,6 +1010,9 @@ namespace DatabasePrototype
                     MessageBox.Show("Only numerical values are allowed in the bounds fields");
                 }
             }
+
+
+          
 
 
 
@@ -1061,6 +1067,13 @@ namespace DatabasePrototype
                     searchByChoice = searchByChoice.Replace(" ", "");
                     filterByChoice = filterByChoice.Replace(" ", "");
                     orderByChoice = orderByChoice.Replace(" ", "");
+
+
+                    //Facade names
+                    if (orderByChoice.Equals("ItemName"))
+                    {
+                        orderByChoice = "Name";
+                    }
 
                     //Add brackets for keyworded names
                     filterByChoice = "[" + filterByChoice + "]";
