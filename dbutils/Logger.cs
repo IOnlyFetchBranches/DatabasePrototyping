@@ -43,7 +43,7 @@ namespace dbutils
                           ".log";
 
             //This <Condition> ? then : else works EVERYWHERE and its nice
-            logFile = File.Open(path, singleFile ? FileMode.OpenOrCreate : FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+            logFile = File.Open(path, singleFile ? FileMode.OpenOrCreate : FileMode.Create, FileAccess.ReadWrite , FileShare.Read);
             //Open writer.
             writer = new StreamWriter(logFile, Encoding.UTF8);
 
