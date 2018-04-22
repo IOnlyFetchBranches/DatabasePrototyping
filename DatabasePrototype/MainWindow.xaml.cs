@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Prince);
+            db = ConnectionManager.Open(ConnectionStrings.Matt);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -129,43 +129,10 @@ namespace DatabasePrototype
             var SearchBar = EmployeesSearchBar;
             //We do the same for every other control
             var SearchBy = EmployeesSearchByComboBox;
-           
-            SearchBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable search button, if filterby is untouched
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesRunButton.IsEnabled = true;
-                if(SearchBar.Text == "")
-                {
-                    EmployeesRunButton.IsEnabled = false;
-                }
-
-            };
-
+            
             var OrderBy = EmployeesSortByComboBox;
 
-
-
             var FilterBy = EmployeesFilterByComboBox;
-
-            //Acts as a filter
-            FilterBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable filter box if not enabled
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesFilterOptionBar.IsEnabled = true;
-
-                if (EmployeesRunButton.IsEnabled)
-                    EmployeesRunButton.IsEnabled = false;
-
-                if (FilterBy.SelectedIndex == 0)
-                {
-                    EmployeesFilterOptionBar.IsEnabled = false;
-                    if (SearchBar.SelectedText == "")
-                    EmployeesRunButton.IsEnabled = true;
-                }
-
-            };
 
             var RunButton = EmployeesRunButton;
 
@@ -265,9 +232,7 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        MessageBox.Show("Invalid Query with Employee generation");
-                        return;
-                        //throw new IllegalStateException("Error in Employee query generation conditional logic.");
+                        throw new IllegalStateException("Error in Employee query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
@@ -373,8 +338,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        MessageBox.Show("Check the format of your query.");
-                        //Application.Current.Shutdown(1);
+                        Application.Current.Shutdown(1);
                     }
 
                    
@@ -383,45 +347,6 @@ namespace DatabasePrototype
                 }
                 
             };
-            //Filter drop down
-            var FilterOptions = EmployeesFilterOptionBar;
-            //Enables/Disables submit button
-            EmployeesFilterOptionBar.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    EmployeesRunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !EmployeesFilterOptionBar.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar?.Text.Length >0 )
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
-
-
-
-
         }
 
 
@@ -459,34 +384,9 @@ namespace DatabasePrototype
                 //We do the same for every other control
                 var SearchBy = CustomersSearchBy;
 
-                SearchBy.SelectionChanged += (obj, sender) =>
-                {
-                    //Set on change to enable search button, if filterby is untouched
-                    if (!CustomersFilterOptionBar.IsEnabled)
-                        CustomersRunButton.IsEnabled = true;
-                    else
-                    {
-                        CustomersRunButton.IsEnabled = false;
-                    }
-                };
-
                 var OrderBy = CustomersSortBy;
 
-
-
                 var FilterBy = CustomersFilterBy;
-
-                //Acts as a filter
-                FilterBy.SelectionChanged += (obj, sender) =>
-                {
-                    //Set on change to enable filter box if not enabled
-                    if (!CustomersFilterOptionBar.IsEnabled)
-                        CustomersFilterOptionBar.IsEnabled = true;
-
-                    if (CustomersRunButton.IsEnabled)
-                        CustomersRunButton.IsEnabled = false;
-
-                };
 
                 var RunButton = CustomersRunButton;
 
@@ -586,9 +486,7 @@ namespace DatabasePrototype
                         }
                         else
                         {
-                            MessageBox.Show("Invlaid Query in Customer Generation.");
-                            return;
-                            //throw new IllegalStateException("Error in Customer query generation conditional logic.");
+                            throw new IllegalStateException("Error in Customer query generation conditional logic.");
                         }
 
                         //This is the final part of our query, the order statement
@@ -694,7 +592,7 @@ namespace DatabasePrototype
                         {
                             //Use EasyBox to handle errors.
                             EasyBox.ShowError(sqe);
-                            //Application.Current.Shutdown(1);
+                            Application.Current.Shutdown(1);
                         }
 
 
@@ -705,42 +603,8 @@ namespace DatabasePrototype
                 };
                 //Filter drop down
                 var FilterOptions = CustomersFilterOptionBar;
-            //Enables/Disables submit button
-            CustomersFilterOptionBar.TextChanged += (obj, sender) =>
-                {
-                    if (FilterOptions.Text.Length > 1)
-                    {
-                        //enable button
-                        RunButton.IsEnabled = true;
-                    }
-                    else
-                    {
-                        RunButton.IsEnabled = false;
-                    }
-                };
-
-
-
-                //Handler that disables search button if box is empty.
-                SearchBar.TextChanged += (sender, args) =>
-                {
-                    if (SearchBar.Text.Length == 0)
-                        CustomersRunButton.IsEnabled = false;
-                    //If there is text AND search by is filled AND there's no filter
-                    else if (SearchBy.SelectedItem != null && !CustomersFilterOptionBar.IsEnabled)
-                    {
-                        RunButton.IsEnabled = true;
-                    }
-                    //If there is text AND search by is filled AND the filter contains text
-                    else if (SearchBy.SelectedItem != null && CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar?.Text.Length > 0)
-                    {
-                        RunButton.IsEnabled = true;
-                    }
-
-                };
-
-
-
+   
+        
 
             }
 
@@ -755,6 +619,7 @@ namespace DatabasePrototype
             string id = "OID";
             string primaryColumn = "CID";
             string secondaryColumn = "Total";
+
 
             //One way of doing dynamic joins?
             //The keys in this dictionary represent a selection value, such as Zipcode
@@ -794,13 +659,25 @@ namespace DatabasePrototype
 
             var FilterOptionBar = OrdersFilterOptionBar;
             //Stores the bounds values
+            double b1;
+            double b2;
             var Bound1 = Orders_Bound1;
             var Bound2 = Orders_Bound2;
             var BoundBox1 = Orders_BoundBox1;
             var BoundBox2 = Orders_BoundBox2;
 
+            //We check to make sure the bounds contains an input
+            if (!String.IsNullOrEmpty(Orders_BoundBox1.Text) || !String.IsNullOrEmpty(Orders_BoundBox2.Text))
+            {
+                //Now we check to see if the input bounds are numeric
+                if (!double.TryParse(Orders_BoundBox1.Text, out b1) || !double.TryParse(Orders_BoundBox2.Text, out b2))
+                {
+                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
+                }
+            }
+
             var RunButton = OrdersRunButton;
-           
+
             //Remember to set default button for each home tab, so that enter will trigger.
             RunButton.IsDefault = true;
             //The most important part, contains submission logic.
@@ -808,8 +685,6 @@ namespace DatabasePrototype
             {
                 //The run button for each tab is responsible for sanitizing input, building the query and launching the result tab
                 //First case is when there is no filter by
-
-                
                 if (true)
                 {
                     //SANITIZATION SECTION
@@ -872,6 +747,7 @@ namespace DatabasePrototype
 
                     }
 
+
                     if (joinList.ContainsKey(filterByChoice))
                     {
 
@@ -922,6 +798,8 @@ namespace DatabasePrototype
                         }
 
                     }
+
+
 
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
@@ -1063,42 +941,6 @@ namespace DatabasePrototype
             };
             //Filter drop down
             var FilterOptions = CustomersFilterOptionBar;
-            //Enables/Disables submit button
-            CustomersFilterOptionBar.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    CustomersRunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !CustomersFilterOptionBar.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar?.Text.Length > 0)
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
-
-
-
 
         }
         /// <summary>
@@ -1109,7 +951,7 @@ namespace DatabasePrototype
             //mystery tab patch
             InventoryTabControl.Items.RemoveAt(1);
 
- 
+
             //Set generic table name
             string mainTable = "InventoryInfo";
             //Declare column names to a generic name
@@ -1152,11 +994,7 @@ namespace DatabasePrototype
 
             var OrderBy = InventorySortBy;
 
-
-
             var FilterBy = InventoryFilterBy;
-
-        
 
             //Handle our bounds here.
             double b1;
@@ -1170,6 +1008,15 @@ namespace DatabasePrototype
             //Define button
             var RunButton = InventoryRunButton;
 
+            //We check to make sure the bounds contains an input
+            if (!String.IsNullOrEmpty(Inventory_BoundBox1.Text) || !String.IsNullOrEmpty(Inventory_BoundBox2.Text))
+            {
+                //Now we check to see if the input bounds are numeric
+                if (!double.TryParse(Inventory_BoundBox2.Text, out b1) || !double.TryParse(Inventory_BoundBox2.Text, out b2))
+                {
+                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
+                }
+            }
 
 
 
@@ -1329,9 +1176,7 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        MessageBox.Show("Invlaid Query with Inventory Generation.");
-                        return;
-                        //throw new IllegalStateException("Error in Inventory query generation conditional logic.");
+                        throw new IllegalStateException("Error in Inventory query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
@@ -1423,7 +1268,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        //Application.Current.Shutdown(1);
+                        Application.Current.Shutdown(1);
                     }
 
 
@@ -1434,39 +1279,6 @@ namespace DatabasePrototype
             };
             //Filter drop down
             var FilterOptions = InventoryFilterOptionBar;
-            //Enables/Disables submit button
-            FilterOptions.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    RunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !FilterOptions.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && FilterOptions.IsEnabled && FilterOptions?.Text.Length > 0)
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
 
 
         }
