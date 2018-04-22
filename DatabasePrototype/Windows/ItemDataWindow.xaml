@@ -1,0 +1,19 @@
+﻿<Window x:Class="DatabasePrototype.Windows.ItemDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabasePrototype.Windows"
+        mc:Ignorable="d"
+        Title="Item Details" Height="215.094" Width="324.259">
+    <Grid>
+        <TextBox x:Name="ItemID" HorizontalAlignment="Left" Height="23" Margin="86,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Item ID" HorizontalAlignment="Left" Margin="25,13,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="CatID" HorizontalAlignment="Left" Height="23" Margin="88,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
+        <Label Content="Category ID" HorizontalAlignment="Left" Margin="13,55,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Description" HorizontalAlignment="Left" Height="37" Margin="88,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"  TextAlignment="Center" Text="This is a sample description."/>
+        <Label Content="Description" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ItemSaveButton" Content="Save" HorizontalAlignment="Left" Margin="230,78,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

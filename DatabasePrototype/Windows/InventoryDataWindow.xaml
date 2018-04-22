@@ -1,0 +1,28 @@
+﻿<Window x:Class="DatabasePrototype.Windows.InventoryDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabasePrototype.Windows"
+        mc:Ignorable="d"
+        Title="Item Info" Height="199.795" Width="411.886">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75*"/>
+            <ColumnDefinition Width="26*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Belongs To Inv" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Item" HorizontalAlignment="Left" Margin="211,11,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ItemName" HorizontalAlignment="Left" Height="23" Margin="250,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="InvID" HorizontalAlignment="Left" Height="23" Margin="108,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94"/>
+        <Label Content="Quantity" HorizontalAlignment="Left" Margin="28,58,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price" HorizontalAlignment="Left" Margin="153,57,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ItemQuantity" HorizontalAlignment="Left" Height="23" Margin="85,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="58" RenderTransformOrigin="0.245,0.36"/>
+        <TextBox x:Name="ItemPrice" HorizontalAlignment="Left" Height="23" Margin="191,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="58" RenderTransformOrigin="0.245,0.36"/>
+        <Button x:Name="ItemDetailsButton" Content="Item Details" HorizontalAlignment="Left" Margin="271,62,0,0" VerticalAlignment="Top" Width="99" RenderTransformOrigin="0.317,0.014" Height="21" Grid.ColumnSpan="2"/>
+        <Label Content="Last Restock" HorizontalAlignment="Left" Margin="72,106,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="LastRestock" HorizontalAlignment="Left" Height="23" Margin="155,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.245,0.36"/>
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="272,112,0,0" VerticalAlignment="Top" Width="99" RenderTransformOrigin="0.317,0.014" Height="21" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Window>
