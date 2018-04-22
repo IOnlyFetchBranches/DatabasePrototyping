@@ -25,7 +25,8 @@ namespace DatabasePrototype.Windows
 
         internal static bool windowOpen = false; //True when window open.
 
-        private OrderDataRecord finalRecord;
+    
+        private IDataRecord finalRecord;
 
 
         public OrderDataWindow(IDataRecord record)
@@ -37,12 +38,19 @@ namespace DatabasePrototype.Windows
                 throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record.");
             }
 
-            //Set global record
-            finalRecord = (OrderDataRecord) record;
+            //Set global record, this is again the one we modify
+            finalRecord = record;
+
+            //Define closecallback for child windows
+            Func<IDataRecord, bool> closeCallback = onChildClosed;
+
+            //Set fields
 
 
-        
-          
+
+
+
+
 
 
 
@@ -51,15 +59,14 @@ namespace DatabasePrototype.Windows
 
 
         //Wrapped by a Func Object to be passed to any child windows
-        bool onCardInfoClosed(OrderDataRecord record)
+        bool onChildClosed(IDataRecord record)
         {
 
             finalRecord = record;
             return true;
         }
 
-
-
+        p
     }
 
 
