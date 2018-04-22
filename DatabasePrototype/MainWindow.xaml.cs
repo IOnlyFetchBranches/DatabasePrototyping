@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Prince);
+            db = ConnectionManager.Open(ConnectionStrings.Matt);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -833,22 +833,7 @@ namespace DatabasePrototype
                     //This is the final part of our query, the order statement
                     string orderStatement = "";
 
-
-                    if (OrderBy.SelectedIndex == 1)
-                    {
-                        //This would be the full name;
-                        if (OrdersCheckBoxIsDesc.IsChecked != null && (bool)OrdersCheckBoxIsDesc.IsChecked)
-                        {
-                            //If they want it desc
-                            orderStatement = " Order By FirstName Desc, LastName Desc";
-                        }
-                        else
-                        {
-                            orderStatement = " Order By FirstName, LastName";
-                        }
-
-                    }
-                    else if (OrderBy.SelectedIndex != -1)
+                    if (OrderBy.SelectedIndex != -1)
                     {
                         //anything other than full name
                         if (OrdersCheckBoxIsDesc.IsChecked != null && (bool)OrdersCheckBoxIsDesc.IsChecked)
