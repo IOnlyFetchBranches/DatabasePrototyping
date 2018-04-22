@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using dbutils.Models;
+using DatabasePrototype.Models;
 
 namespace DatabasePrototype
 {
@@ -24,14 +26,17 @@ namespace DatabasePrototype
 
         //Store login password during testing
         public IDictionary<string, string> users = new Dictionary<string, string>();
-       
+
+        private SqlConnection _connection;
 
         public Login()
         {
             InitializeComponent();
 
-            //Store terrible easy login info [securely] for testing ease
-            SqlCommand getUsers = new SqlCommand("SELECT * FROM");
+
+            _connection = ConnectionManager.Open(ConnectionStrings.Matt);
+
+
             //MAKE sure that the password entry is a PasswordBox
             //Also Set the max text to 16
             LoginUserPassword.MaxLength = 16;
@@ -96,26 +101,19 @@ namespace DatabasePrototype
                         new SHA256Managed().ComputeHash(
                             Encoding.ASCII.GetBytes(pass)));
             //Check, in the future this should query the DB
-            if (users.ContainsKey(uname))
+            var getUsers = new SqlCommand("Select * From Logins Where [Password] = '" + hash + "' And Username = '" + uname + "'", _connection);
+
+            var results = getUsers.ExecuteReader();
+
+            if (results.Read())
             {
-                if (users[uname] != hash)
-                {
-                    //Prompt user
-                    MessageBox.Show("Invalid Username/Password", "Login Error", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                    LoginUserName.Text = ""; //Reset text
-                    LoginUserPassword.Password = ""; //Reset text
-                    return;
-                }
+               
                 
                 //Launch Main
                 new MainWindow().Show();
 
                 //Close this one
                 this.Close();
-
-
-
             }
             else
             {
@@ -126,6 +124,9 @@ namespace DatabasePrototype
                 LoginUserPassword.Password = ""; //Reset text
             
             }
+
+
+            results.Close();
 
 
 

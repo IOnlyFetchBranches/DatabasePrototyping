@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Matt);
+            db = ConnectionManager.OpenLast();
 
             //Load Functionality for Employees
             InitializeEmployees();
