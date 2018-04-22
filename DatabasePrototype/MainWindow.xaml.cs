@@ -340,7 +340,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        MessageBox.Show("Error with Employee query.");
+                       //Application.Current.Shutdown(1);
                     }
 
                    
@@ -596,7 +597,8 @@ namespace DatabasePrototype
                         {
                             //Use EasyBox to handle errors.
                             EasyBox.ShowError(sqe);
-                            Application.Current.Shutdown(1);
+                            MessageBox.Show("Error with Customer query.");
+                            //Application.Current.Shutdown(1);
                         }
 
 
@@ -793,17 +795,15 @@ namespace DatabasePrototype
                         filterStatement = " And " + filterByChoice + " " + Bound1.Text + " '" +
                                           BoundBox1.Text + " '";
 
-                        //Check if a secondary bound has been set
-                        if (BoundBox2.IsEnabled && BoundBox2.Text.Length > 0)
-                        {
-                            //Attach the secondary bound
-                            filterStatement += " And " + filterByChoice + " " + Bound2.Text + " '" +
-                                               BoundBox2.Text + " '";
-                        }
+                       
 
+                    } //Check if a secondary bound has been set
+                   else if (BoundBox2.IsEnabled && BoundBox2.Text.Length > 0)
+                    {
+                        //Attach the secondary bound
+                        filterStatement += " And " + filterByChoice + " " + Bound2.Text + " '" +
+                                           BoundBox2.Text + " '";
                     }
-
-
 
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
@@ -918,6 +918,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
+                        MessageBox.Show("Error with Orders Query.");
                         //TODO: Remove all these!
                         //Application.Current.Shutdown(1);
                     }
@@ -1132,21 +1133,24 @@ namespace DatabasePrototype
                     {
                         filterStatement = " And " + filterByChoice + " = '" + InventoryFilterOptionBar.Text + "'";
                     }
+
                     //User has chosen something that requires or can have a bound
-                    else if (Inventory_Bound1.IsEnabled && Inventory_BoundBox1.Text.Length >0)
+                    if (Inventory_Bound1.IsEnabled && Inventory_BoundBox1.Text.Length >0)
                     {
                         //If a box hax been selected that requires a bound
-                        filterStatement = " And " + filterByChoice + " " + Inventory_Bound1.Text + " '" +
+                        filterStatement += "  " + filterByChoice + " " + Inventory_Bound1.Text + " '" +
                                           Inventory_BoundBox1.Text + " '";
 
-                        //Check if a secondary bound has been set
-                        if (Inventory_BoundBox2.IsEnabled && Inventory_BoundBox2.Text.Length > 0)
-                        {
-                            //Attach the secondary bound
-                            filterStatement += " And " + filterByChoice + " " + Inventory_Bound2.Text + " '" +
-                                               Inventory_BoundBox2.Text + " '";
-                        }
                        
+                       
+                    }
+
+                    //Check if a secondary bound has been set
+                    if (Inventory_BoundBox2.IsEnabled && Inventory_BoundBox2.Text.Length > 0)
+                    {
+                        //Attach the secondary bound
+                        filterStatement += " And " + filterByChoice + " " + Inventory_Bound2.Text + " '" +
+                                           Inventory_BoundBox2.Text + " '";
                     }
 
 
@@ -1156,12 +1160,25 @@ namespace DatabasePrototype
                         //If the user has followed the default search logic
                         //(Type info in search bar, choose search by =>{Whatever else}
                         whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
-                    else if (sanitizedText.Length == 0 && filterStatement != "")
+                    else if (sanitizedText.Length == 0 && InventoryFilterOptionBar.Text.Length > 0)
                     {
                         //If the user wants all users that match a given filter, then type the filter in the option bar
                         whereStatement =
                             "Where " + filterStatement.Replace(" And ",
                                 ""); //Its just the filter statement minus the And part;
+                    }
+                    else if (Bound1.SelectedIndex > 0 && Bound2.SelectedIndex < 1)
+                    {
+                        
+                        whereStatement = "Where " + filterStatement;
+                        whereStatement = whereStatement.Replace("And" , "");
+                    }
+                    else if (Bound1.SelectedIndex > 0 && Bound2.SelectedIndex > 0)
+                    {
+
+                        whereStatement = "Where " + filterStatement;
+                        whereStatement = "";
+
                     }
                     else
                     {
@@ -1259,7 +1276,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        MessageBox.Show("Error with Inventory Query");
+                        //Application.Current.Shutdown(1);
                     }
 
 
