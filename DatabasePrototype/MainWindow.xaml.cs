@@ -340,7 +340,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        MessageBox.Show("Error with Employee query.");
+                       //Application.Current.Shutdown(1);
                     }
 
                    
@@ -596,7 +597,8 @@ namespace DatabasePrototype
                         {
                             //Use EasyBox to handle errors.
                             EasyBox.ShowError(sqe);
-                            Application.Current.Shutdown(1);
+                            MessageBox.Show("Error with Customer query.");
+                            //Application.Current.Shutdown(1);
                         }
 
 
@@ -931,6 +933,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
+                        MessageBox.Show("Error with Orders Query.");
                         //TODO: Remove all these!
                         //Application.Current.Shutdown(1);
                     }
@@ -1288,7 +1291,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        MessageBox.Show("Error with Inventory Query");
+                        //Application.Current.Shutdown(1);
                     }
 
 
