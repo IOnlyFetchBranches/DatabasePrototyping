@@ -25,7 +25,7 @@ namespace DatabasePrototype.Windows
 
         internal static bool windowOpen = false; //True when window open.
 
-        private CustomerDataRecord finalRecord;
+        private IDataRecord finalRecord;
 
        
         public CustomerDataWindow(IDataRecord record)
@@ -34,11 +34,11 @@ namespace DatabasePrototype.Windows
 
             if (!(record is CustomerDataRecord))
             {
-                throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record.");
+                throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record or OrderDataRecord.");
             }
 
             //Set global record
-            finalRecord = (CustomerDataRecord) record;
+            finalRecord =  record;
 
             //Set default button first ( so that enter will trigger it. )
             CustUpdateButton.IsDefault = true;
@@ -49,7 +49,7 @@ namespace DatabasePrototype.Windows
             {
 
                 //Callback method
-                Func<CustomerDataRecord,bool> CloseCallback = onCardInfoClosed;
+                Func<IDataRecord,bool> CloseCallback = onCardInfoClosed;
                 //Enable the card info button and set it's oncick
                 CustButtonViewCard.IsEnabled = true;
                 //We open the new window and pass it a reference to the record
@@ -103,11 +103,17 @@ namespace DatabasePrototype.Windows
 
 
         //Wrapped by a Func Object to be passed to any child windows
-        bool onCardInfoClosed(CustomerDataRecord record)
+        bool onCardInfoClosed(IDataRecord record)
         {
-
-            finalRecord = record;
-            return true;
+            if (record is CustomerDataRecord || record is OrderDataRecord)
+            {
+                finalRecord = record;
+                return true;
+            }
+            else
+            {
+                throw new IllegalStateException("Cannot pass this record to this window, expected Customer Data Record or Order Data Record");
+            }
         }
 
 

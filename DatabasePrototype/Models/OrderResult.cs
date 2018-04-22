@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DatabasePrototype.Models
 {
-    public class InventoryResult : IResult
+    public class OrderResult : IResult
     {
-        //DONTCOPY THIS ONE, THE _idm and _pm are switched!
         //data holders;
         private string _idm, _pm, _sm;
 
@@ -18,39 +17,39 @@ namespace DatabasePrototype.Models
 
         public string PrimaryMember => _pm;
         public string SecondaryMember => _sm;
-        public string Table => "InventoryInfo";
+        public string Table => "Orders";
 
 
         /// <summary>
-        /// Creates a new Customer Result.
+        /// Creates a new Order Result.
         /// Accepts Objects, although it is expecting STRINGS ONLY.
+        /// It should be in this order (Id,PrimaryMember,SecondaryMember}
         /// </summary>
         /// <param name="memberStrings">Must be size 3, Format for now! {eid info,FirstName, LastName}</param>
-        public InventoryResult(params object[] memberStrings)
+        public OrderResult(params object[] memberStrings)
         {
             if (memberStrings.Length != 3)
                 throw new ArgumentException("Input must contain three fields. See docs.");
-            //Set fields, {InvID,Name,Quantity}
-            _idm = memberStrings[0] +"";
+            //Set fields
+            _idm =memberStrings[0] + "";
             _pm = memberStrings[1] + "";
             _sm = memberStrings[2] + "";
 
-         
         }
         /// <summary>
         /// Gets the Id Column Name.
         /// </summary>
+        /// <returns>OID</returns>
+        public string IdHeader() => "OID";
+        /// <summary>
+        /// Returns customer id attached to the order.
+        /// </summary>
         /// <returns>CID</returns>
-        public string IdHeader() => "InvID";
+        public string PrimaryHeader() => "CID";
         /// <summary>
-        /// Returns first name.
+        /// Returns total.
         /// </summary>
         /// <returns></returns>
-        public string PrimaryHeader() => "ItemId";
-        /// <summary>
-        /// Returns last name.
-        /// </summary>
-        /// <returns></returns>
-        public string SecondaryHeader() => "Item Name";
+        public string SecondaryHeader() => "Total";
     }
 }

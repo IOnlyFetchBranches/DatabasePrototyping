@@ -106,17 +106,29 @@ namespace DatabasePrototype.Models
                             record = new CustomerDataRecord(results, connection);
                             new CustomerDataWindow(record).Show();
                             break;
-
-                        case "InventoryInfo":
+                        case "Orders":
                             command = new SqlCommand(
                                 "Select * From " + item.Table
                                                  + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember + "'" //Dont forget your '
                                 , connection);
 
                             results = command.ExecuteReader();
+                            record = new OrderDataRecord(results, connection);
+                            new OrderDataWindow(record).Show();
+                            break;
+
+                        case "InventoryInfo":
+                            command = new SqlCommand(
+                                "Select * From " + item.Table
+                                                 + " Where " + item.IdHeader() + " = '" + item.IdentifyingMember + "'" +"" +
+                                                 " And  " + item.PrimaryHeader() + " = '" + item.PrimaryMember +"' " //Dont forget your '
+                                , connection);
+
+                            results = command.ExecuteReader();
                             record = new InventoryDataRecord(results, connection);
                             new InventoryDataWindow(record).Show();
                             break;
+
                     }
 
 

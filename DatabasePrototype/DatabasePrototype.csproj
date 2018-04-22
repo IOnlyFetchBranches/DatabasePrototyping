@@ -59,6 +59,8 @@
     <Compile Include="Models\CustomerResult.cs" />
     <Compile Include="Models\InventoryDataRecord.cs" />
     <Compile Include="Models\InventoryResult.cs" />
+    <Compile Include="Models\OrderDataRecord.cs" />
+    <Compile Include="Models\OrderResult.cs" />
     <Compile Include="Windows\CustomerDataWindow.xaml.cs">
       <DependentUpon>CustomerDataWindow.xaml</DependentUpon>
     </Compile>
@@ -70,6 +72,9 @@
     </Compile>
     <Compile Include="Windows\ItemDataWindow.xaml.cs">
       <DependentUpon>ItemDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OrderDataWindow.xaml.cs">
+      <DependentUpon>OrderDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\StoreCardDataWindow.xaml.cs">
       <DependentUpon>StoreCardDataWindow.xaml</DependentUpon>
@@ -88,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ItemDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\OrderDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

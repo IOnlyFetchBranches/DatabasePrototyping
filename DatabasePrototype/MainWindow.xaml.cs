@@ -69,8 +69,14 @@ namespace DatabasePrototype
             //Load Functionality for Customers
             InitializeCustomers();
 
-            //Load Functionality for the Inventory
-            IntitializeInventory();
+        
+            //Load Functionality for Orders
+            InitializeOrders();
+
+            //Load Functionality for the Inventories
+            InitializeInventory();
+
+            
 
 
 
@@ -736,20 +742,21 @@ namespace DatabasePrototype
 
         private void InitializeOrders()
         {
-
+            //Fix mystery tab.
+            OrdersTabControl.Items.RemoveAt(1);
             //Set generic table name
             string mainTable = "Orders";
             //Declare column names to a generic name
             string id = "OID";
-            string primaryColumn = "PurchaseDate";
-            string secondaryColumn = "CID";
+            string primaryColumn = "CID";
+            string secondaryColumn = "Total";
 
 
             //One way of doing dynamic joins?
             //The keys in this dictionary represent a selection value, such as Zipcode
             //The values are the table that would be needed to retireve this value, For zip thats EmployeeContacts
             //We could check contains<Selection value> and them automatically append the correct table to the join statement?
-            Dictionary<string, string> joinList = new Dictionary<string, string>();
+            Dictionary<string, string[]> joinList = new Dictionary<string, string[]>();
 
             //Add conditions, remeber these are just column names that you need to account for.
             //Good example, even though i show ZipCode to the user, We sanitize that to a proper column name "Zip"
@@ -760,7 +767,14 @@ namespace DatabasePrototype
             //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
             //50 Questions handled
 
-            //joinList.Add("Zip", "EmployeeContacts");
+            joinList.Add("FirstName", new string[] {"CID","Customers"} );
+            joinList.Add("LastName", new string[] { "CID", "Customers" });
+            joinList.Add("Email", new string[] { "CID", "Customers" });
+            joinList.Add("CellPhone", new string[] { "CID", "Customers" });
+            joinList.Add("DaysVisitedThisMonth", new string[] { "CID", "Customers" });
+            joinList.Add("ItemPrice", new string[] { "OID", "OrderInformation" });
+            joinList.Add("isReturned", new string[] { "OID", "OrderInformation" });
+            joinList.Add("Quantity", new string[] { "OID", "OrderInformation" });
 
             //Declare Controls to a generic name;
             //That way we can resuse most of this logic by just assigning the proper control here.
@@ -768,34 +782,20 @@ namespace DatabasePrototype
             //We do the same for every other control
             var SearchBy = OrdersSearchBy;
 
-            SearchBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable search button, if filterby is untouched
-                if (!OrdersFilterOptionBar.IsEnabled)
-                    OrdersRunButton.IsEnabled = true;
-                else
-                {
-                    OrdersRunButton.IsEnabled = false;
-                }
-            };
-
             var OrderBy = OrdersSortBy;
 
 
 
             var FilterBy = OrdersFilterBy;
 
-            //Acts as a filter
-            FilterBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable filter box if not enabled
-                if (!OrdersFilterOptionBar.IsEnabled)
-                    OrdersFilterOptionBar.IsEnabled = true;
+            var FilterOptionBar = OrdersFilterOptionBar;
 
-                if (OrdersRunButton.IsEnabled)
-                    OrdersRunButton.IsEnabled = false;
+            var Bound1 = Orders_Bound1;
+            var Bound2 = Orders_Bound2;
+            var BoundBox1 = Orders_BoundBox1;
+            var BoundBox2 = Orders_BoundBox2;
 
-            };
+        
 
             var RunButton = OrdersRunButton;
 
@@ -844,9 +844,7 @@ namespace DatabasePrototype
                     orderByChoice = orderByChoice.Replace(" ", "");
 
                     //If you have any 'facade names' that is , inputs that don't share the same screen name as the column name, handle that here
-                    if (filterByChoice == "ZipCode")
-                        filterByChoice = "Zip"; //Change to the shortened form
-
+                    
                     //Build Query
                     //Hopefully the only part we'll have to hardcode
 
@@ -859,25 +857,69 @@ namespace DatabasePrototype
                     //All joins will be done by some sort of ID
 
                     //conditionals for all entries that will require touching another table and making sure that table is accounted for
-                    if (joinList.ContainsKey(filterByChoice))
+
+                    string onStatement = "";
+                    if (joinList.ContainsKey(searchByChoice))
                     {
                         //On <jtable>.<idvalue> = <maintable>.<idvalue>
-                        var onStatement = " On " + joinList[filterByChoice] + "." + id + " = " + mainTable + "." + id;
+                        onStatement = " On " + joinList[searchByChoice][1] + "." + joinList[searchByChoice][0] + " = " + mainTable + "." + joinList[searchByChoice][0];
                         // <maintabl> , <jtable> + [OnStatement]
-                        joinStatement += " join " + joinList[filterByChoice] + " " + onStatement + " ";
+                        joinStatement += " join " + joinList[searchByChoice][1] + " " + onStatement + " ";
 
                     }
+
+
+                    if (joinList.ContainsKey(filterByChoice))
+                    {
+
+                        //On <jtable>.<idvalue> = <maintable>.<idvalue>
+                        var nOnStatement = " On " + joinList[filterByChoice][1] + "." + joinList[filterByChoice][0] + " = " + mainTable + "." + joinList[filterByChoice][0];
+                        //Check if we need to add the join
+                        if (onStatement != nOnStatement && !onStatement.Contains(nOnStatement))
+                        {
+                            onStatement += nOnStatement;
+                            // <maintabl> , <jtable> + [OnStatement]
+                            joinStatement += " join " + joinList[filterByChoice][1] + " " + onStatement + " ";
+                        }
+                        
+
+                    }
+
+                
 
                     string fromStatement = " From " + mainTable + " " + joinStatement;
                     //Explanation for +Maintable + "." + id, To prevent ambiguous column name in case of join
-                    string selectionStatement = "Select " + mainTable + "." + id + "," + primaryColumn + ", " + secondaryColumn + " " + fromStatement;
+                    string selectionStatement = "Select " + mainTable + "." + id + "," + mainTable + "." + primaryColumn + ", " + secondaryColumn + " " + fromStatement;
                     //The "And" Part of the where OR the WHOLE where if there is no search by chosen.
                     string filterStatement = ""; //triggered if filter by is on
 
-                    if (CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar.Text.Length > 0)
+                    if (FilterOptionBar.IsEnabled && FilterOptionBar.Text.Length > 0)
                     {
-                        filterStatement = " And " + filterByChoice + " = '" + CustomersFilterOptionBar.Text + "'";
+                        filterStatement = " And " + filterByChoice + " = '" + FilterOptionBar.Text + "'";
                     }
+
+                    if (FilterOptionBar.IsEnabled && FilterOptionBar.Text.Length > 0
+                                                           && Bound1.IsEnabled == false)
+                    {
+                        filterStatement = " And " + filterByChoice + " = '" + FilterOptionBar.Text + "'";
+                    }
+                    //User has chosen something that requires or can have a bound
+                    else if( Bound1.IsEnabled && BoundBox1.Text.Length > 0)
+                    {
+                        //If a box hax been selected that requires a bound
+                        filterStatement = " And " + filterByChoice + " " + Bound1.Text + " '" +
+                                          BoundBox1.Text + " '";
+
+                        //Check if a secondary bound has been set
+                        if (BoundBox2.IsEnabled && BoundBox2.Text.Length > 0)
+                        {
+                            //Attach the secondary bound
+                            filterStatement += " And " + filterByChoice + " " + Bound2.Text + " '" +
+                                               BoundBox2.Text + " '";
+                        }
+
+                    }
+
 
 
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
@@ -893,9 +935,16 @@ namespace DatabasePrototype
                             "Where " + filterStatement.Replace(" And ",
                                 ""); //Its just the filter statement minus the And part;
                     }
+                    else if(sanitizedText.Length ==0)
+                    {
+
+                        whereStatement =
+                            "Where " + filterStatement.Replace(" And ",
+                                ""); //Its just the filter statement minus the And part;
+                    }
                     else
                     {
-                        throw new IllegalStateException("Error in Customer query generation conditional logic.");
+                        EasyBox.ShowError(new IllegalStateException("Could not generate query!"));
                     }
 
                     //This is the final part of our query, the order statement
@@ -905,7 +954,7 @@ namespace DatabasePrototype
                     if (OrderBy.SelectedIndex == 1)
                     {
                         //This would be the full name;
-                        if (CustomersCheckBoxIsDesc.IsChecked != null && (bool)CustomersCheckBoxIsDesc.IsChecked)
+                        if (OrdersCheckBoxIsDesc.IsChecked != null && (bool)OrdersCheckBoxIsDesc.IsChecked)
                         {
                             //If they want it desc
                             orderStatement = " Order By FirstName Desc, LastName Desc";
@@ -919,7 +968,7 @@ namespace DatabasePrototype
                     else if (OrderBy.SelectedIndex != -1)
                     {
                         //anything other than full name
-                        if (CustomersCheckBoxIsDesc.IsChecked != null && (bool)CustomersCheckBoxIsDesc.IsChecked)
+                        if (OrdersCheckBoxIsDesc.IsChecked != null && (bool)OrdersCheckBoxIsDesc.IsChecked)
                         {
                             //If they want it desc
                             orderStatement = " Order By " + orderByChoice + " Desc";
@@ -933,7 +982,7 @@ namespace DatabasePrototype
                     //NOW WEBUILD THE QUERY
 
                     //QUERY
-                    SqlCommand GetCustomers = new SqlCommand(
+                    SqlCommand GetOrders = new SqlCommand(
                                //Do not forget to space after each statement
                                //Although I've already added proper spacing in the statements themselves
                                //Data we will be returning
@@ -947,17 +996,17 @@ namespace DatabasePrototype
                                );
                     //Debug ops, and for easy referencing later.
                     Logger.LogG("SqlCommand",
-                        "Created query:" + Environment.NewLine + GetCustomers.CommandText + Environment.NewLine);
+                        "Created query:" + Environment.NewLine + GetOrders.CommandText + Environment.NewLine);
 
                     //You must link the connection, maybe we can create a connection wrapper that does this for us.
                     //You could also pass as second param in constructor but the idea would be to have it link automatically
                     //It could grab the db connection from the Connection Manager.
-                    GetCustomers.Connection = db;
+                    GetOrders.Connection = db;
 
                     try
                     {
                         //Launch Command, Returns a Reader on the result table
-                        var results = GetCustomers.ExecuteReader();
+                        var results = GetOrders.ExecuteReader();
 
                         //Spawn a new results tab, besure to call Prepare() before adding to the master tab control for that Section!
                         var resultsTab = new ResultsTab();
@@ -966,7 +1015,7 @@ namespace DatabasePrototype
 
                         while (results.Read())
                         {
-                            var result = new CustomerResult(results[0], results[1], results[2]); //Create new result with an EMPLOYEE Context.
+                            var result = new OrderResult(results[0], results[1], results[2]); //Create new result with an EMPLOYEE Context.
                             resultsTab.Add(result);
                         }
 
@@ -977,7 +1026,7 @@ namespace DatabasePrototype
 
                         //How many other result tabs are open?
                         int count = 1; //init the counter
-                        foreach (object tab in CustomersTabControl.Items)
+                        foreach (object tab in OrdersTabControl.Items)
                         {
                             if (tab is ResultsTab)
                                 count++;
@@ -986,14 +1035,14 @@ namespace DatabasePrototype
                         //PREPARE the tab BEFORE adding to the MasterTab's TabControl.
                         resultsTab.Prepare("Results " + count);
                         //Add to tabcontrol.
-                        CustomersTabControl.Items.Add(resultsTab);
+                        OrdersTabControl.Items.Add(resultsTab);
 
                         //Switch to new tab, for pazzaz really, but it makes sense.
                         //ie when a user searches, you expect to be brought to the results
                         //imagine if google opened it's results in a new tab and made you switch to it
                         //or when you rightclick and issue an  open in new tab command , you have to manually click the tab
                         //it wouldn't make any sense, so don't forget to always do this.
-                        CustomersTabControl.SelectedIndex = CustomersTabControl.Items.Count - 1;
+                        OrdersTabControl.SelectedIndex = OrdersTabControl.Items.Count - 1;
 
 
                     }
@@ -1001,7 +1050,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        //TODO: Remove all these!
+                        //Application.Current.Shutdown(1);
                     }
 
 
@@ -1050,14 +1100,21 @@ namespace DatabasePrototype
 
 
         }
+        /// <summary>
+        /// Setup the base logic for the Inventory tab.
+        /// </summary>
+        private void InitializeInventory() {
 
-        private void IntitializeInventory() {
+            //mystery tab patch
+            InventoryTabControl.Items.RemoveAt(1);
+
+
             //Set generic table name
             string mainTable = "InventoryInfo";
             //Declare column names to a generic name
             string id = "InvID";
-            string primaryColumn = "ItemID";
-            string secondaryColumn = "Quantity";
+            string primaryColumn = "ItemId";
+            string secondaryColumn = "[Name]";
 
             //One way for doing bounds, keep a list of values that can be bounded
             List<string> BoundedVals = new List<string>();
@@ -1080,9 +1137,10 @@ namespace DatabasePrototype
             //Of course if we have time we can refine the system to make it more intelligent, but I'd rather implement that once we get all
             //50 Questions handled
 
-            joinList.Add("[Name]",new string[]{"ItemID","Items"});
+            joinList.Add(secondaryColumn,new string[]{"ItemId","Items"});
+            
 
-   
+
             //TODO: Add logic to enable/disable fields to help prevent incorrect queries.
 
             //Declare Controls to a generic name;
@@ -1207,7 +1265,16 @@ namespace DatabasePrototype
                         joinStatement += " join " + joinList[searchByChoice][1] + " " + onStatement + " ";
 
                     }
-                    
+
+
+                    if (joinList.ContainsKey(secondaryColumn))
+                    {
+                        onStatement = " On " + joinList[secondaryColumn][1] + "." + joinList[secondaryColumn][0] + " = " + mainTable + "." + joinList[secondaryColumn][0];
+                        // <maintabl> , <jtable> + [OnStatement]
+                        joinStatement += " join " + joinList[secondaryColumn][1] + " " + onStatement + " ";
+
+                    }
+
 
 
 
@@ -1215,7 +1282,8 @@ namespace DatabasePrototype
 
                     string fromStatement = " From " + mainTable + " " + joinStatement;
                     //Explanation for +Maintable + "." + id, To prevent ambiguous column name in case of join
-                    string selectionStatement = "Select " + mainTable + "." + id + "," + mainTable+"." + primaryColumn + ", " + mainTable +"." + secondaryColumn + " " + fromStatement;
+                    //IMPORTANTEXCEPTION ->no mt.column for primaryColumn as it's a joined column
+                    string selectionStatement = "Select " + mainTable + "." + id + ", " +  mainTable + "."+primaryColumn  + ", " + secondaryColumn + " " + fromStatement;
                     //The "And" Part of the where OR the WHOLE where if there is no search by chosen.
                     string filterStatement = ""; //triggered if filter by is on
 
@@ -1228,15 +1296,15 @@ namespace DatabasePrototype
                     else if (Inventory_Bound1.IsEnabled && Inventory_BoundBox1.Text.Length >0)
                     {
                         //If a box hax been selected that requires a bound
-                        filterStatement = " And " + filterByChoice + " " + Inventory_Bound1.Text + " " +
-                                          Inventory_BoundBox1.Text;
+                        filterStatement = " And " + filterByChoice + " " + Inventory_Bound1.Text + " '" +
+                                          Inventory_BoundBox1.Text + " '";
 
                         //Check if a secondary bound has been set
                         if (Inventory_BoundBox2.IsEnabled && Inventory_BoundBox2.Text.Length > 0)
                         {
                             //Attach the secondary bound
-                            filterStatement += " And " + filterByChoice + " " + Inventory_Bound2.Text + " " +
-                                               Inventory_BoundBox2.Text;
+                            filterStatement += " And " + filterByChoice + " " + Inventory_Bound2.Text + " '" +
+                                               Inventory_BoundBox2.Text + " '";
                         }
                        
                     }
@@ -1400,6 +1468,8 @@ namespace DatabasePrototype
 
 
 
+
+
         ///////////////////////EVENT HANDLERS//////////////////////////////////////////////////////////////////
 
 
@@ -1441,6 +1511,11 @@ namespace DatabasePrototype
         }
 
         private void OrdersFilterBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void EmployeesSearchBar_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
         }

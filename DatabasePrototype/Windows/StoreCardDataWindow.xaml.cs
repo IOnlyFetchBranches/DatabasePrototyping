@@ -23,24 +23,26 @@ namespace DatabasePrototype.Windows
     public partial class StoreCardDataWindow : Window
     {
         //C# uses delegates to act as method points where items taking values use Func<> voids use Actions
-        private Func<CustomerDataRecord, bool> closeCallback;
+        private Func<IDataRecord, bool> closeCallback;
 
-        private CustomerDataRecord finalRecord;
+        private IDataRecord finalRecord;
 
         
-        public StoreCardDataWindow(Window callingWindow, IDataRecord record, Func<CustomerDataRecord, bool> closeCallback)
+        public StoreCardDataWindow(Window callingWindow, IDataRecord record, Func<IDataRecord, bool> closeCallback)
         {
             InitializeComponent();
 
-            if (!(record is CustomerDataRecord))
+            if (!(record is CustomerDataRecord) && !(record is OrderDataRecord))
             {
-                throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record.");
+                throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record or Order Data Record.");
             }
             //Set owner
             Owner = callingWindow;
 
             //Set callback
             this.closeCallback = closeCallback;
+
+            finalRecord = record;
 
             Logger.LogG("Opening customer card for " + record.Get("FirstName") + " "+ record.Get("LastName"));
 
@@ -53,9 +55,9 @@ namespace DatabasePrototype.Windows
             CardSaveButton.Click += (s, e) =>
             {
                 //Gather all the fields update them.
-                record.SetField("CardID", CardID.Text);
-                record.SetField("Points", CardPoints.Text);
-                record.SetField("Balance", CardBalance.Text);
+                finalRecord.SetField("CardID", CardID.Text);
+                finalRecord.SetField("Points", CardPoints.Text);
+                finalRecord.SetField("Balance", CardBalance.Text);
                 Logger.LogG("Updating card info for " + record.Get("FirstName") + " " + record.Get("LastName"));
                 
             
