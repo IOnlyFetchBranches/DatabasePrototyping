@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Marcus);
+            db = ConnectionManager.Open(ConnectionStrings.Prince);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -265,7 +265,9 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        throw new IllegalStateException("Error in Employee query generation conditional logic.");
+                        MessageBox.Show("Invalid Query with Employee generation");
+                        return;
+                        //throw new IllegalStateException("Error in Employee query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
@@ -371,7 +373,8 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        MessageBox.Show("Check the format of your query.");
+                        //Application.Current.Shutdown(1);
                     }
 
                    
@@ -583,7 +586,9 @@ namespace DatabasePrototype
                         }
                         else
                         {
-                            throw new IllegalStateException("Error in Customer query generation conditional logic.");
+                            MessageBox.Show("Invlaid Query in Customer Generation.");
+                            return;
+                            //throw new IllegalStateException("Error in Customer query generation conditional logic.");
                         }
 
                         //This is the final part of our query, the order statement
@@ -689,7 +694,7 @@ namespace DatabasePrototype
                         {
                             //Use EasyBox to handle errors.
                             EasyBox.ShowError(sqe);
-                            Application.Current.Shutdown(1);
+                            //Application.Current.Shutdown(1);
                         }
 
 
@@ -751,7 +756,6 @@ namespace DatabasePrototype
             string primaryColumn = "CID";
             string secondaryColumn = "Total";
 
-
             //One way of doing dynamic joins?
             //The keys in this dictionary represent a selection value, such as Zipcode
             //The values are the table that would be needed to retireve this value, For zip thats EmployeeContacts
@@ -790,25 +794,13 @@ namespace DatabasePrototype
 
             var FilterOptionBar = OrdersFilterOptionBar;
             //Stores the bounds values
-            double b1;
-            double b2;
             var Bound1 = Orders_Bound1;
             var Bound2 = Orders_Bound2;
             var BoundBox1 = Orders_BoundBox1;
             var BoundBox2 = Orders_BoundBox2;
 
-            //We check to make sure the bounds contains an input
-            if (!String.IsNullOrEmpty(Orders_BoundBox1.Text) || !String.IsNullOrEmpty(Orders_BoundBox2.Text))
-            {
-                //Now we check to see if the input bounds are numeric
-                if (!double.TryParse(Orders_BoundBox1.Text, out b1) || !double.TryParse(Orders_BoundBox2.Text, out b2))
-                {
-                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
-                }
-            }
-
             var RunButton = OrdersRunButton;
-
+           
             //Remember to set default button for each home tab, so that enter will trigger.
             RunButton.IsDefault = true;
             //The most important part, contains submission logic.
@@ -816,6 +808,8 @@ namespace DatabasePrototype
             {
                 //The run button for each tab is responsible for sanitizing input, building the query and launching the result tab
                 //First case is when there is no filter by
+
+                
                 if (true)
                 {
                     //SANITIZATION SECTION
@@ -878,7 +872,6 @@ namespace DatabasePrototype
 
                     }
 
-
                     if (joinList.ContainsKey(filterByChoice))
                     {
 
@@ -929,8 +922,6 @@ namespace DatabasePrototype
                         }
 
                     }
-
-
 
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
@@ -1118,7 +1109,7 @@ namespace DatabasePrototype
             //mystery tab patch
             InventoryTabControl.Items.RemoveAt(1);
 
-
+ 
             //Set generic table name
             string mainTable = "InventoryInfo";
             //Declare column names to a generic name
@@ -1179,15 +1170,6 @@ namespace DatabasePrototype
             //Define button
             var RunButton = InventoryRunButton;
 
-            //We check to make sure the bounds contains an input
-            if (!String.IsNullOrEmpty(Inventory_BoundBox1.Text) || !String.IsNullOrEmpty(Inventory_BoundBox2.Text))
-            {
-                //Now we check to see if the input bounds are numeric
-                if (!double.TryParse(Inventory_BoundBox2.Text, out b1) || !double.TryParse(Inventory_BoundBox2.Text, out b2))
-                {
-                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
-                }
-            }
 
 
 
@@ -1347,7 +1329,9 @@ namespace DatabasePrototype
                     }
                     else
                     {
-                        throw new IllegalStateException("Error in Inventory query generation conditional logic.");
+                        MessageBox.Show("Invlaid Query with Inventory Generation.");
+                        return;
+                        //throw new IllegalStateException("Error in Inventory query generation conditional logic.");
                     }
 
                     //This is the final part of our query, the order statement
@@ -1439,7 +1423,7 @@ namespace DatabasePrototype
                     {
                         //Use EasyBox to handle errors.
                         EasyBox.ShowError(sqe);
-                        Application.Current.Shutdown(1);
+                        //Application.Current.Shutdown(1);
                     }
 
 

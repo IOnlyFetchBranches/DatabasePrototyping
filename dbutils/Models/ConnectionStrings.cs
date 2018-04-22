@@ -17,6 +17,8 @@ namespace dbutils.Outdated
         public static string Marcus =>
             "Data Source=DESKTOP-OQ6MOPB\\SQLEXPRESS;Initial Catalog=WallyWorld;Integrated Security=True";
         public static string Shawn => "Data Source=AMD8-PC;Initial Catalog=WallyWorld;Integrated Security=True";
-    
+
+        public static string Prince =>
+            "Data Source=PRINCE\\SQLEXPRESS;Initial Catalog=WallyWorld;Integrated Security=True";
     }
 }
