@@ -59,5 +59,29 @@ namespace DatabasePrototype.Models
 
             return connections[_default.GetHashCode()];
         }
+
+
+        /// <summary>
+        /// Returns new Opened Connection
+        /// </summary>
+        public static SqlConnection OpenNew()
+        {
+            var c = new SqlConnection(_default);
+            c.Open();
+            return c ;
+        }
+
+        /// <summary>
+        /// Returns new Opened Connection
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static SqlConnection OpenNew(string connectionString)
+        {
+            var c = new SqlConnection(connectionString);
+            c.Open();
+            return c;
+        }
     }
 }
+
