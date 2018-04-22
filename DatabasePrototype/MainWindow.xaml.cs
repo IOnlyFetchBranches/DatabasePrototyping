@@ -789,13 +789,23 @@ namespace DatabasePrototype
             var FilterBy = OrdersFilterBy;
 
             var FilterOptionBar = OrdersFilterOptionBar;
-
+            //Stores the bounds values
+            double b1;
+            double b2;
             var Bound1 = Orders_Bound1;
             var Bound2 = Orders_Bound2;
             var BoundBox1 = Orders_BoundBox1;
             var BoundBox2 = Orders_BoundBox2;
 
-        
+            //We check to make sure the bounds contains an input
+            if (!String.IsNullOrEmpty(Orders_BoundBox1.Text) || !String.IsNullOrEmpty(Orders_BoundBox2.Text))
+            {
+                //Now we check to see if the input bounds are numeric
+                if (!double.TryParse(Orders_BoundBox1.Text, out b1) || !double.TryParse(Orders_BoundBox2.Text, out b2))
+                {
+                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
+                }
+            }
 
             var RunButton = OrdersRunButton;
 
@@ -1158,6 +1168,8 @@ namespace DatabasePrototype
         
 
             //Handle our bounds here.
+            double b1;
+            double b2;
             var Bound1 = Inventory_Bound1;
             var Bound2 = Inventory_Bound2;
 
@@ -1167,8 +1179,17 @@ namespace DatabasePrototype
             //Define button
             var RunButton = InventoryRunButton;
 
+            //We check to make sure the bounds contains an input
+            if (!String.IsNullOrEmpty(Inventory_BoundBox1.Text) || !String.IsNullOrEmpty(Inventory_BoundBox2.Text))
+            {
+                //Now we check to see if the input bounds are numeric
+                if (!double.TryParse(Inventory_BoundBox2.Text, out b1) || !double.TryParse(Inventory_BoundBox2.Text, out b2))
+                {
+                    MessageBox.Show("Only numerical values are allowed in the bounds fields");
+                }
+            }
 
-            
+
 
 
 
@@ -1182,6 +1203,7 @@ namespace DatabasePrototype
             //The most important part, contains submission logic.
             RunButton.Click += (obj, sender) =>
             {
+                
                 //The run button for each tab is responsible for sanitizing input, building the query and launching the result tab
                 //First case is when there is no filter by
                 if (true)

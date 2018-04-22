@@ -46,7 +46,7 @@
                                 <Label Background="#FF212121" Content="Stores" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                                 <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,74.07,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
                                 <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,74.07,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
-                                <ComboBox x:Name="StoresSortBy" HorizontalAlignment="Left" Margin="22,105.07,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679" Grid.Row="1" SelectionChanged="StoresSortBy_SelectionChanged">
+                                <ComboBox x:Name="StoresSortBy" HorizontalAlignment="Left" Margin="22,105.07,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679" Grid.Row="1" >
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -125,10 +125,10 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem Header="Choose..." IsEnabled="False"/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem HorizontalContentAlignment="Center" Content="EID"/>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">First Name</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">Last Name</ComboBoxItem>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="First Name"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="Last Name"/>
 
                                 </ComboBox>
                                 <ComboBox x:Name="EmployeesFilterByComboBox" Margin="183,188,256,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,0.714">
@@ -138,12 +138,12 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem Header="Choose..." IsEnabled="False"/>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">Position</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">CurrentStatus</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">ZipCode</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">HourlyWage</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">Salary</ComboBoxItem>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="Position"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="CurrentStatus"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="ZipCode"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="HourlyWage"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="Salary"/>
                                 </ComboBox>
                                 <TextBox x:Name="EmployeesSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" TextAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseEnter="EmployeesSearchBar_OnMouseEnter" TextChanged="EmployeesSearchBar_TextChanged_1"/>
                                 <ComboBox x:Name="EmployeesSearchByComboBox" Margin="103,188,336,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,0.714" >
@@ -154,9 +154,11 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
 
-                                    <ComboBoxItem HorizontalContentAlignment="Center">First Name</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">Last Name</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">EID</ComboBoxItem>
+                                    <ComboBoxItem/>
+
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="First Name"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="Last Name"/>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="EID"/>
                                 </ComboBox>
                                 <Label x:Name="EmployeesLabelSearchBy" Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" />
                                 <TextBox x:Name="EmployeesFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" IsEnabled="False" />
@@ -204,7 +206,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem IsEnabled="False"/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem Content="CID" Cursor="Cross"/>
                                     <ComboBoxItem Content="First Name"/>
                                     <ComboBoxItem Content="Last Name"/>
@@ -216,7 +218,6 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem IsEnabled="False"/>
                                     <ComboBoxItem/>
                                 </ComboBox>
                                 <TextBox x:Name="CustomersSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
@@ -228,7 +229,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem IsEnabled="False"/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem Content="First Name"/>
                                     <ComboBoxItem Content="Last Name"/>
                                     <ComboBoxItem Content="Email"/>
@@ -276,7 +277,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem Content="OID"/>
                                     <ComboBoxItem Content="CID"/>
                                     <ComboBoxItem Content="Total"/>
@@ -297,7 +298,7 @@
                                     <ComboBoxItem Content="Email"/>
                                 </ComboBox>
                                 <Label Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
-                                <ComboBox x:Name="Orders_Bound1" HorizontalAlignment="Left" Margin="268,233,0,0" VerticalAlignment="Top" Width="48" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
+                                <ComboBox x:Name="Orders_Bound1" HorizontalAlignment="Left" Margin="268,234,0,0" VerticalAlignment="Top" Width="48" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -390,7 +391,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem Content="InvID"/>
                                     <ComboBoxItem Content="ItemId"/>
                                     <ComboBoxItem Content="Item Name"/>
@@ -402,7 +403,7 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
-                                    <MenuItem IsEnabled="False"/>
+                                    <ComboBoxItem/>
                                     <ComboBoxItem Content="Price"/>
                                     <ComboBoxItem Content="Quantity"/>
                                 </ComboBox>
