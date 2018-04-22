@@ -61,7 +61,7 @@ namespace DatabasePrototype
            
             //TODO:Set your connection string here!
             //Open Db Connection, only call this once then you can call OpenLast()
-            db = ConnectionManager.Open(ConnectionStrings.Marcus);
+            db = ConnectionManager.Open(ConnectionStrings.Matt);
 
             //Load Functionality for Employees
             InitializeEmployees();
@@ -129,43 +129,10 @@ namespace DatabasePrototype
             var SearchBar = EmployeesSearchBar;
             //We do the same for every other control
             var SearchBy = EmployeesSearchByComboBox;
-           
-            SearchBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable search button, if filterby is untouched
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesRunButton.IsEnabled = true;
-                if(SearchBar.Text == "")
-                {
-                    EmployeesRunButton.IsEnabled = false;
-                }
-
-            };
-
+            
             var OrderBy = EmployeesSortByComboBox;
 
-
-
             var FilterBy = EmployeesFilterByComboBox;
-
-            //Acts as a filter
-            FilterBy.SelectionChanged += (obj, sender) =>
-            {
-                //Set on change to enable filter box if not enabled
-                if (!EmployeesFilterOptionBar.IsEnabled)
-                    EmployeesFilterOptionBar.IsEnabled = true;
-
-                if (EmployeesRunButton.IsEnabled)
-                    EmployeesRunButton.IsEnabled = false;
-
-                if (FilterBy.SelectedIndex == 0)
-                {
-                    EmployeesFilterOptionBar.IsEnabled = false;
-                    if (SearchBar.SelectedText == "")
-                    EmployeesRunButton.IsEnabled = true;
-                }
-
-            };
 
             var RunButton = EmployeesRunButton;
 
@@ -380,45 +347,6 @@ namespace DatabasePrototype
                 }
                 
             };
-            //Filter drop down
-            var FilterOptions = EmployeesFilterOptionBar;
-            //Enables/Disables submit button
-            EmployeesFilterOptionBar.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    EmployeesRunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !EmployeesFilterOptionBar.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar?.Text.Length >0 )
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
-
-
-
-
         }
 
 
@@ -456,34 +384,9 @@ namespace DatabasePrototype
                 //We do the same for every other control
                 var SearchBy = CustomersSearchBy;
 
-                SearchBy.SelectionChanged += (obj, sender) =>
-                {
-                    //Set on change to enable search button, if filterby is untouched
-                    if (!CustomersFilterOptionBar.IsEnabled)
-                        CustomersRunButton.IsEnabled = true;
-                    else
-                    {
-                        CustomersRunButton.IsEnabled = false;
-                    }
-                };
-
                 var OrderBy = CustomersSortBy;
 
-
-
                 var FilterBy = CustomersFilterBy;
-
-                //Acts as a filter
-                FilterBy.SelectionChanged += (obj, sender) =>
-                {
-                    //Set on change to enable filter box if not enabled
-                    if (!CustomersFilterOptionBar.IsEnabled)
-                        CustomersFilterOptionBar.IsEnabled = true;
-
-                    if (CustomersRunButton.IsEnabled)
-                        CustomersRunButton.IsEnabled = false;
-
-                };
 
                 var RunButton = CustomersRunButton;
 
@@ -700,42 +603,8 @@ namespace DatabasePrototype
                 };
                 //Filter drop down
                 var FilterOptions = CustomersFilterOptionBar;
-            //Enables/Disables submit button
-            CustomersFilterOptionBar.TextChanged += (obj, sender) =>
-                {
-                    if (FilterOptions.Text.Length > 1)
-                    {
-                        //enable button
-                        RunButton.IsEnabled = true;
-                    }
-                    else
-                    {
-                        RunButton.IsEnabled = false;
-                    }
-                };
-
-
-
-                //Handler that disables search button if box is empty.
-                SearchBar.TextChanged += (sender, args) =>
-                {
-                    if (SearchBar.Text.Length == 0)
-                        CustomersRunButton.IsEnabled = false;
-                    //If there is text AND search by is filled AND there's no filter
-                    else if (SearchBy.SelectedItem != null && !CustomersFilterOptionBar.IsEnabled)
-                    {
-                        RunButton.IsEnabled = true;
-                    }
-                    //If there is text AND search by is filled AND the filter contains text
-                    else if (SearchBy.SelectedItem != null && CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar?.Text.Length > 0)
-                    {
-                        RunButton.IsEnabled = true;
-                    }
-
-                };
-
-
-
+   
+        
 
             }
 
@@ -1072,42 +941,6 @@ namespace DatabasePrototype
             };
             //Filter drop down
             var FilterOptions = CustomersFilterOptionBar;
-            //Enables/Disables submit button
-            CustomersFilterOptionBar.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    CustomersRunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !CustomersFilterOptionBar.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar?.Text.Length > 0)
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
-
-
-
 
         }
         /// <summary>
@@ -1161,11 +994,7 @@ namespace DatabasePrototype
 
             var OrderBy = InventorySortBy;
 
-
-
             var FilterBy = InventoryFilterBy;
-
-        
 
             //Handle our bounds here.
             double b1;
@@ -1450,39 +1279,6 @@ namespace DatabasePrototype
             };
             //Filter drop down
             var FilterOptions = InventoryFilterOptionBar;
-            //Enables/Disables submit button
-            FilterOptions.TextChanged += (obj, sender) =>
-            {
-                if (FilterOptions.Text.Length > 1)
-                {
-                    //enable button
-                    RunButton.IsEnabled = true;
-                }
-                else
-                {
-                    RunButton.IsEnabled = false;
-                }
-            };
-
-
-
-            //Handler that disables search button if box is empty.
-            SearchBar.TextChanged += (sender, args) =>
-            {
-                if (SearchBar.Text.Length == 0)
-                    RunButton.IsEnabled = false;
-                //If there is text AND search by is filled AND there's no filter
-                else if (SearchBy.SelectedItem != null && !FilterOptions.IsEnabled)
-                {
-                    RunButton.IsEnabled = true;
-                }
-                //If there is text AND search by is filled AND the filter contains text
-                else if (SearchBy.SelectedItem != null && FilterOptions.IsEnabled && FilterOptions?.Text.Length > 0)
-                {
-                    RunButton.IsEnabled = true;
-                }
-
-            };
 
 
         }

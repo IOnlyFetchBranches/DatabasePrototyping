@@ -17,6 +17,5 @@ namespace dbutils.Models
         public static string Matt =>
             "Data Source=DESKTOP-RBTJU73\\SQLEXPRESS;Initial Catalog=WallyWorld;Integrated Security=True";
 
-
     }
 }
