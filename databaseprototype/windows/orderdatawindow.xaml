@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DatabasePrototype.Windows"
         mc:Ignorable="d"
-        Title="OrderDataWindow" Height="300" Width="300">
+        Title="OrderDataWindow" Height="300" Width="420">
     <Grid>
-        
+        <Label Content="Order ID" HorizontalAlignment="Left" Margin="38,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderID" HorizontalAlignment="Left" Height="23" Margin="8,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="OrderButtonCustomerInfo" Content="Customer Info" HorizontalAlignment="Left" Margin="300,19,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.18,0.35"/>
+        <Button x:Name="OrderButtonShippingInfo" Content="Shipping Info" HorizontalAlignment="Left" Margin="298,60,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.18,0.35"/>
+        <Button x:Name="OrderButtonStoreCardInfo" Content="Store Card Info" HorizontalAlignment="Left" Margin="298,99,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.18,0.35"/>
+        <Label Content="Purchase Date" HorizontalAlignment="Left" Margin="24,74,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderPurchaseDate" HorizontalAlignment="Left" Height="23" Margin="11,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Shipping Date" HorizontalAlignment="Left" Margin="26,144,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderShippingDate" HorizontalAlignment="Left" Height="24" Margin="12,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Customer First Name" HorizontalAlignment="Left" Margin="156,12,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderCustomerFirstName" HorizontalAlignment="Left" Height="24" Margin="156,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Customer Last Name" HorizontalAlignment="Left" Margin="152,69,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderCustomerLastName" HorizontalAlignment="Left" Height="24" Margin="152,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Arrival Date" HorizontalAlignment="Left" Margin="34,200,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderRecievedDate" HorizontalAlignment="Left" Height="24" Margin="16,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Order Total" HorizontalAlignment="Left" Margin="167,147,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OrderTotal" HorizontalAlignment="Left" Height="24" Margin="153,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="OrderButtonViewItems" Content="View Order Items" HorizontalAlignment="Left" Margin="297,136,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.18,0.35" />
+        <Button x:Name="OrderButtonUpdateButton" Content="Update" HorizontalAlignment="Left" Margin="300,211,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.18,0.35"  />
+
     </Grid>
 </Window>
