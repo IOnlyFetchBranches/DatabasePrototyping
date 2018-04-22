@@ -53,6 +53,11 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem/>
+                                    <ComboBoxItem/>
                                 </ComboBox>
                                 <ComboBox x:Name="StoresFilterBy" HorizontalAlignment="Left" Margin="183,105.07,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" Grid.Row="1">
                                     <ComboBox.Background>
@@ -219,6 +224,10 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <ComboBoxItem/>
+                                    <ComboBoxItem Content="First Name"/>
+                                    <ComboBoxItem Content="Last Name"/>
+                                    <ComboBoxItem Content="Email"/>
+                                    <ComboBoxItem Content="CellPhone"/>
                                 </ComboBox>
                                 <TextBox x:Name="CustomersSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
                                 <ComboBox x:Name="CustomersSearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
