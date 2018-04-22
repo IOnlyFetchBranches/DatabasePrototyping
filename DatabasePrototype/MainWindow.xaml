@@ -46,7 +46,7 @@
                                 <Label Background="#FF212121" Content="Stores" HorizontalAlignment="Left" Margin="219,10,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontSize="22" FontWeight="Bold" Foreground="#FFFAFAFA"/>
                                 <Label Content=" Sort By" HorizontalAlignment="Left" Margin="22,74.07,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
                                 <Label Content="Filter By" HorizontalAlignment="Left" Margin="183,74.07,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
-                                <ComboBox x:Name="StoresSortBy" HorizontalAlignment="Left" Margin="22,105.07,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679" Grid.Row="1">
+                                <ComboBox x:Name="StoresSortBy" HorizontalAlignment="Left" Margin="22,105.07,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679" Grid.Row="1" SelectionChanged="StoresSortBy_SelectionChanged">
                                     <ComboBox.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                             <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -126,10 +126,9 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <MenuItem Header="Choose..." IsEnabled="False"/>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">Full Name</ComboBoxItem>
+                                    <ComboBoxItem HorizontalContentAlignment="Center" Content="EID"/>
                                     <ComboBoxItem HorizontalContentAlignment="Center">First Name</ComboBoxItem>
                                     <ComboBoxItem HorizontalContentAlignment="Center">Last Name</ComboBoxItem>
-                                    <ComboBoxItem HorizontalContentAlignment="Center">EID</ComboBoxItem>
 
                                 </ComboBox>
                                 <ComboBox x:Name="EmployeesFilterByComboBox" Margin="183,188,256,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,0.714">
@@ -206,7 +205,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <MenuItem IsEnabled="False"/>
-                                    <ComboBoxItem Content="Full Name"/>
+                                    <ComboBoxItem Content="CID" Cursor="Cross"/>
                                     <ComboBoxItem Content="First Name"/>
                                     <ComboBoxItem Content="Last Name"/>
                                 </ComboBox>
@@ -277,6 +276,10 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <MenuItem/>
+                                    <ComboBoxItem Content="OID"/>
+                                    <ComboBoxItem Content="CID"/>
+                                    <ComboBoxItem Content="Total"/>
                                 </ComboBox>
                                 <TextBox x:Name="OrdersSearchBar" Height="26" Margin="22,101,99,0" TextWrapping="Wrap" TextAlignment="Center" Text="" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" FontSize="18" Background="#FFFAFAFA" />
                                 <ComboBox x:Name="OrdersSearchBy" HorizontalAlignment="Left" Margin="103,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.394,1.679">
@@ -320,7 +323,7 @@
                                 </ComboBox>
                                 <TextBox x:Name="Orders_BoundBox1" HorizontalAlignment="Left" Height="22" Margin="340,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
                                 <Label Content="Bounds" HorizontalAlignment="Left" Margin="210,250,0,0" VerticalAlignment="Top" Foreground="White"/>
-                                <TextBox x:Name="Orders_BoundBox2" HorizontalAlignment="Left" Height="22" Margin="338,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.442,1.409"/>
+                                <TextBox x:Name="Orders_BoundBox2" HorizontalAlignment="Left" Height="22" Margin="340,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.442,1.409"/>
                                 <ComboBox x:Name="OrdersFilterBy" HorizontalAlignment="Left" Margin="183,189,0,0" VerticalAlignment="Top" Width="62" RenderTransformOrigin="0.394,1.679">
 
                                     <ComboBox.Background>
@@ -387,6 +390,10 @@
                                             <GradientStop Color="#FFFAFAFA" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
+                                    <MenuItem/>
+                                    <ComboBoxItem Content="InvID"/>
+                                    <ComboBoxItem Content="ItemId"/>
+                                    <ComboBoxItem Content="Item Name"/>
                                 </ComboBox>
                                 <ComboBox x:Name="InventoryFilterBy" HorizontalAlignment="Left" Margin="183,188,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.483,0.714" SelectionChanged="OrdersFilterBy_SelectionChanged">
                                     <ComboBox.Background>
@@ -439,7 +446,7 @@
                                 </ComboBox>
                                 <TextBox x:Name="Inventory_BoundBox1" HorizontalAlignment="Left" Height="22" Margin="340,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69"/>
                                 <Label Content="Bounds" HorizontalAlignment="Left" Margin="210,250,0,0" VerticalAlignment="Top" Foreground="White"/>
-                                <TextBox x:Name="Inventory_BoundBox2" HorizontalAlignment="Left" Height="22" Margin="338,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.442,1.409"/>
+                                <TextBox x:Name="Inventory_BoundBox2" HorizontalAlignment="Left" Height="22" Margin="340,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.442,1.409"/>
                             </Grid>
                             <!--Internal Code for this section's home tab goes after here -->
 
