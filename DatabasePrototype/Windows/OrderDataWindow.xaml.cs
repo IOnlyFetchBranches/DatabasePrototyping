@@ -45,6 +45,26 @@ namespace DatabasePrototype.Windows
             Func<IDataRecord, bool> closeCallback = onChildClosed;
 
             //Set fields
+            OrderID.Text = record.Get("OID");
+            OrderCustomerFirstName.Text = record.Get("FirstName");
+            OrderCustomerLastName.Text = record.Get("LastName");
+            OrderPurchaseDate.Text = record.Get("PurchaseDate");
+            OrderShippingDate.Text = record.Get("ShipDate");
+            OrderRecievedDate.Text = record.Get("DateRecieved");
+            OrderTotal.Text = record.Get("Total");
+
+
+
+
+            
+
+
+
+            //Set onclicks
+
+            //TODO Implment the other buttons.
+            OrderButtonViewItems.Click += (s, a) => {new OrderInformationWindow((OrderDataRecord)finalRecord, closeCallback).Show(); };
+
 
 
 

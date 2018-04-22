@@ -18,7 +18,14 @@ namespace DatabasePrototype.Models
         /// Dictionary whose keys are column names and values are row specific values
         /// </summary>
         private Dictionary<string, string> data = new Dictionary<string, string>();
-        private Dictionary<string, string> orderInfoData = new Dictionary<string, string>();
+        /// <summary>
+        /// Stores our order items
+        /// </summary>
+        private Dictionary<int, LineItem> orderInfoData = new Dictionary<int, LineItem>();
+
+
+        //Contains shipping info
+        private Dictionary<string, string> shipData = new Dictionary<string, string>();
 
 
 
@@ -40,7 +47,11 @@ namespace DatabasePrototype.Models
 
 
 
-
+        /// <summary>
+        /// Data record constructors retrieve and parse all needed data into a dictionary from which you get your data.
+        /// </summary>
+        /// <param name="rowData"></param>
+        /// <param name="connection"></param>
         public OrderDataRecord(SqlDataReader rowData, SqlConnection connection)
         {
             if (!rowData.HasRows)
@@ -77,6 +88,7 @@ namespace DatabasePrototype.Models
 
             string custId = data["CID"];
             string ordID = data["OID"];
+            string shipID = data["ShipID"];
             
         
             //Query
@@ -108,13 +120,12 @@ namespace DatabasePrototype.Models
             rowData.Close();
 
 
-            //Query
-            SqlCommand getOrdInfo = new SqlCommand("Select * From OrderInformation Where OID = '" + ordID + "'", _connection);
+            SqlCommand getShipping = new SqlCommand("Select * From ShippingAddress Where ShipID = '" + shipID + "'", _connection);
 
             //if you get an error here, check your database setup! Ensure you have the latest script pulled from the repo.
-            rowData = getOrdInfo.ExecuteReader();
+            rowData = getShipping.ExecuteReader();
             rowData.Read(); //Again, we must push it forward one.
-            Logger.LogG(TAG, "Reading Order info for " + ordID);
+            Logger.LogG(TAG, "Reading Shipping info for " + custId);
             for (x = 0; x < rowData.FieldCount; x++)
             {
                 var colName = rowData.GetName(x);
@@ -131,8 +142,51 @@ namespace DatabasePrototype.Models
                 }
 
 
-                orderInfoData.Add(colName, (String)val);
+                shipData.Add(colName, (String)val);
             }
+            //Close the reader, to free the calling SqlCommand that gave us the reader.
+            rowData.Close();
+
+            //Query
+            SqlCommand getOrdInfo = new SqlCommand("Select * From OrderInformation Where OID = '" + ordID + "'", _connection);
+
+            //if you get an error here, check your database setup! Ensure you have the latest script pulled from the repo.
+            rowData = getOrdInfo.ExecuteReader();
+            //For this we must read every record associated with the order ID
+
+
+            int line = 0; //The line we're processing.
+            while (rowData.Read())
+            {
+                line++;
+                Logger.LogG(TAG, "Reading Order info for " + ordID);
+                var lineItem = new LineItem();
+                
+
+                for (x = 0; x < rowData.FieldCount; x++)
+                {
+                    var colName = rowData.GetName(x);
+
+                    //get the value for the column
+                    var val = rowData.GetFieldValue<Object>(x);
+                    if (val is DateTime)
+                        val = ((DateTime) val).ToString("yyyy-MM-dd");
+                    else
+                    {
+                        val = val + "";
+                    }
+
+
+                    lineItem.SetField(colName, (string) val);
+                }
+                //Bind header fields, for list view reading.
+
+                lineItem.BindData();
+
+                orderInfoData.Add(line,lineItem);
+
+            }
+
             //Close the reader, to free the calling SqlCommand that gave us the reader.
             rowData.Close();
 
@@ -206,7 +260,7 @@ namespace DatabasePrototype.Models
         {
 
             //TODO:Always change these, to match the record's tables!
-            var _tables = new[] { "Orders","Customers", "OrderInformation" };
+            var _tables = new[] { "Orders","Customers", "OrderInformation", "ShippingAddress" };
 
             //So let's begin with the final part, building the base query. 
             //For generification reasons, the query will pull fields from the map, which can be updated from the GUI via SetField()
@@ -247,20 +301,35 @@ namespace DatabasePrototype.Models
             _rawQuery = _rawQuery.Remove(_rawQuery.LastIndexOf(",", StringComparison.Ordinal), 1);
             queryBuilder.Clear();
 
-            //Build third query, to update orderInformation
-            queryBuilder.Append("Update " + _tables[2] + " Set ");
+
+            //Build  query, to update Shipping Address
+            queryBuilder.Append("Update " + _tables[3] + " Set ");
 
             //parse the dictionary into sql.
-            foreach (KeyValuePair<string, string> pair in orderInfoData)
+            foreach (KeyValuePair<string, string> pair in shipData)
             {
                 queryBuilder.Append((string)(pair.Key + " = '" + pair.Value + "' , ")); //Don't forget the ' 
             }
 
             //Add where
-            queryBuilder.Append("Where OID = '" + data["OID"] + "' And ItemID = '" + orderInfoData["ItemID"] +"' "  ); //Don't FoRgEt the ' !
+            queryBuilder.Append("Where ShipID = '" + data["ShipID"] + "'"); //Don't FoRgEt the ' !
 
             _rawQuery = _rawQuery + Environment.NewLine + queryBuilder;
             _rawQuery = _rawQuery.Remove(_rawQuery.LastIndexOf(",", StringComparison.Ordinal), 1);
+            queryBuilder.Clear();
+
+
+
+
+
+            //Build and attach all LineItem Update Queries.
+            foreach (KeyValuePair<int, LineItem> pair in orderInfoData)
+            {
+                queryBuilder.Append(pair.Value.GenUpdateQuery(true)); //Don't forget the ' 
+            }
+
+
+            _rawQuery = _rawQuery + Environment.NewLine + queryBuilder;
             queryBuilder.Clear();
 
 
@@ -271,6 +340,146 @@ namespace DatabasePrototype.Models
             //DEBUG
             MessageBox.Show("Built query:\n" + _query);
             Logger.LogG(TAG, "Built Query:\n" + _query);
+        }
+
+
+        //Return all lineItems
+        public List<LineItem> GetLineItems()
+        {
+            return orderInfoData.Values.ToList();
+        }
+    }
+
+   
+
+
+    /// <summary>
+    /// Defines a line item, a specialized result unique to this record.
+    /// Supports binding on Quantity, ItemName, ItemPrice, and IsReturned
+    /// </summary>
+    public class LineItem
+    {
+        /// <summary>
+        /// The fields for this order information
+        /// </summary>
+        private Dictionary<string, string> fields;
+        private Dictionary<string, string> itemFields;
+
+        //Properties for DataBinding to list view, set in BindData()
+        public string ItemName { get; set; }
+        public string ItemPrice { get; set; }
+        public string Quantity { get; set; }
+        public string IsReturned { get; set; }
+
+
+
+        internal LineItem()
+        {
+            fields = new Dictionary<string, string>();
+            itemFields = new Dictionary<string, string>();
+
+        }
+
+
+        public void SetField(string key, string value)
+        {
+            if (fields.ContainsKey(key))
+            {
+                fields[key] = value;
+            }
+            else if (key == "ItemID")
+            {
+                var connection = ConnectionManager.OpenNew();
+
+                var getItem = new SqlCommand("Select * From Items Where Items.ItemId = '" + value + "'", connection);
+                //if you get an error here, check your database setup! Ensure you have the latest script pulled from the repo.
+                var rowData = getItem.ExecuteReader();
+                rowData.Read(); //Again, we must push it forward one.
+                for (int x = 0; x < rowData.FieldCount; x++)
+                {
+                    var colName = rowData.GetName(x);
+                    //This should not happen, but just incase of accidental duplicates, we skip them.
+                    if (itemFields.ContainsKey(colName))
+                        continue;
+
+                    var val = rowData.GetFieldValue<Object>(x);
+                    if (val is DateTime)
+                        val = ((DateTime)val).ToString("yyyy-MM-dd");
+                    else
+                    {
+                        val = val + "";
+                    }
+
+
+                    itemFields.Add(colName, (String)val);
+                }
+                //Close the reader, to free the calling SqlCommand that gave us the reader.
+                rowData.Close();
+                //Close the conenction
+                connection.Close();
+
+                //Add the ItemId
+                fields.Add(key, value);
+            }
+            else
+            {
+                fields.Add(key, value);
+            }
+        }
+
+        public string GetField(string key)
+        {
+            if (fields.ContainsKey(key))
+            {
+                return fields[key];
+            }
+            else if (itemFields.ContainsKey(key))
+            {
+                return itemFields[key];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        internal string GenUpdateQuery(bool removeLastComma)
+        {
+            StringBuilder queryBuilder = new StringBuilder();
+
+            queryBuilder.Append(" Update OrderInformation Set ");
+            //parse the dictionary into sql.
+            foreach (KeyValuePair<string, string> pair in fields)
+            {
+                queryBuilder.Append((string)(pair.Key + " = '" + pair.Value + "' , ")); //Don't forget the ' 
+            }
+
+            //Add where
+            queryBuilder.Append(" Where OID = '" + fields["OID"] + "' And ItemID = '" + fields["ItemID"] + "' "); //Don't FoRgEt the ' !
+
+
+            if (removeLastComma)
+            {
+                var _rawQuery = Environment.NewLine + queryBuilder;
+                _rawQuery = _rawQuery.Remove(_rawQuery.LastIndexOf(",", StringComparison.Ordinal), 1);
+                queryBuilder.Clear();
+                return _rawQuery;
+            }
+            else
+            {
+                return queryBuilder.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Called by runtime after this item has been fully filled
+        /// </summary>
+        internal void BindData()
+        {
+            ItemName = itemFields["Name"];
+            ItemPrice = fields["ItemPrice"];
+            Quantity = fields["Quantity"];
+            IsReturned = fields["IsReturned"];
         }
     }
 }

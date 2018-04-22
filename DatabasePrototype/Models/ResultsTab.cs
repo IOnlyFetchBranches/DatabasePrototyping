@@ -240,6 +240,8 @@ namespace DatabasePrototype.Models
             heading.Children.Add(closeLabel);
             //Set heading
             this.Header = heading;
+
+
             
 
 
