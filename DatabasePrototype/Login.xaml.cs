@@ -34,7 +34,7 @@ namespace DatabasePrototype
             InitializeComponent();
 
 
-            _connection = ConnectionManager.Open(ConnectionStrings.Matt);
+            _connection = ConnectionManager.Open(ConnectionStrings.Marcus);
 
 
             //MAKE sure that the password entry is a PasswordBox

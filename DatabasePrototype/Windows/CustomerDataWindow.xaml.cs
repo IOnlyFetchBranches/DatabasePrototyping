@@ -27,6 +27,8 @@ namespace DatabasePrototype.Windows
 
         private IDataRecord finalRecord;
 
+        private readonly Func<IDataRecord,bool> onClose;
+
        
         public CustomerDataWindow(IDataRecord record)
         {
@@ -100,6 +102,86 @@ namespace DatabasePrototype.Windows
 
         }
 
+        /// <summary>
+        /// For showing from another datawindow.
+        /// </summary>
+        /// <param name="callingWindow"></param>
+        /// <param name="record"></param>
+        /// <param name="closeCallback"></param>
+        public CustomerDataWindow(Window callingWindow,IDataRecord record, Func<IDataRecord,bool> closeCallback)
+        {
+            InitializeComponent();
+
+            if (!(record is CustomerDataRecord) && !(record is OrderDataRecord))
+            {
+                throw new IllegalStateException("Cannot pass this record to this window! Expecting Customer Data Record or OrderDataRecord.");
+            }
+
+            Owner = callingWindow;
+
+            onClose = closeCallback;
+
+            //Set global record
+            finalRecord = record;
+
+            //Set default button first ( so that enter will trigger it. )
+            CustUpdateButton.IsDefault = true;
+
+            //Check the record for a storecard
+            var cardID = finalRecord.Get("CardID");
+            if (!string.IsNullOrEmpty(cardID))
+            {
+
+                //Callback method
+                Func<IDataRecord, bool> CloseCallback = onCardInfoClosed;
+                //Enable the card info button and set it's oncick
+                CustButtonViewCard.IsEnabled = true;
+                //We open the new window and pass it a reference to the record
+                CustButtonViewCard.Click += (s, e) =>
+                {
+                    new StoreCardDataWindow(this, finalRecord, CloseCallback).Show();
+                    windowOpen = true;
+                };
+            }
+            else
+            {
+                //disable the button
+                CustButtonViewCard.IsEnabled = false;
+            }
+
+
+
+
+            //Load all the fields
+            CustCID.Text = finalRecord.Get("CID");
+            CustFirstName.Text = finalRecord.Get("FirstName");
+            CustLastName.Text = finalRecord.Get("LastName");
+            CustEmail.Text = finalRecord.Get("Email");
+            CustCellPhone.Text = finalRecord.Get("CellPhone");
+            CustLastVisit.Text = finalRecord.Get("LastVisited");
+
+
+            //Set update button
+
+            CustUpdateButton.Click += (s, e) =>
+            {
+                finalRecord.SetField("CID", CustCID.Text);
+                finalRecord.SetField("FirstName", CustFirstName.Text);
+                finalRecord.SetField("LastName", CustLastName.Text);
+                finalRecord.SetField("Email", CustEmail.Text);
+                finalRecord.SetField("CellPhone", CustCellPhone.Text);
+                finalRecord.SetField("LastVisited", CustLastVisit.Text);
+
+                //Close the window
+                Close();
+
+            };
+
+
+
+        }
+
+
 
 
         //Wrapped by a Func Object to be passed to any child windows
@@ -117,7 +199,14 @@ namespace DatabasePrototype.Windows
         }
 
 
-
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            if (onClose != null)
+            {
+                onClose.Invoke(finalRecord);
+            }
+        }
     }
 
 
