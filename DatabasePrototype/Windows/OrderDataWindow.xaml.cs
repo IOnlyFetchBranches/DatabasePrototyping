@@ -63,7 +63,13 @@ namespace DatabasePrototype.Windows
             //Set onclicks
 
             //TODO Implment the other buttons.
+            //This one had to be handled differently...
             OrderButtonViewItems.Click += (s, a) => {new OrderInformationWindow((OrderDataRecord)finalRecord, closeCallback).Show(); };
+
+            //Data Windows
+            OrderButtonShippingInfo.Click += (s, a) => { new ShippingDataWindow(this,(OrderDataRecord)finalRecord, closeCallback).Show(); };
+            OrderButtonStoreCardInfo.Click += (s, a) => { new StoreCardDataWindow(this,(OrderDataRecord)finalRecord, closeCallback).Show(); };
+            OrderButtonCustomerInfo.Click += (s, a) => { new CustomerDataWindow(this,(OrderDataRecord)finalRecord, closeCallback).Show(); };
 
 
 

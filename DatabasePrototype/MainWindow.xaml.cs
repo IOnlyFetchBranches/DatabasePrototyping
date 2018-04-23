@@ -849,16 +849,20 @@ namespace DatabasePrototype
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
                     if (sanitizedText.Length > 0)
+                    {
 
-                        if ((bool)OrdersWildCardCheckBox.IsChecked)
+                        if ((bool) OrdersWildCardCheckBox.IsChecked)
                         {
-                            whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " + filterStatement;
+                            whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " +
+                                             filterStatement;
                         }
 
                         else
                         {
-                            whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                            whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " +
+                                             filterStatement;
                         }
+                    }
                     else if (sanitizedText.Length == 0 && filterStatement != "")
                     {
                         //If the user wants all users that match a given filter, then type the filter in the option bar

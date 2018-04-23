@@ -80,6 +80,9 @@
     <Compile Include="Windows\OrderInformationWindow.xaml.cs">
       <DependentUpon>OrderInformationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ShippingDataWindow.xaml.cs">
+      <DependentUpon>ShippingDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\StoreCardDataWindow.xaml.cs">
       <DependentUpon>StoreCardDataWindow.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\OrderInformationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ShippingDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -29,6 +29,12 @@ namespace DatabasePrototype.Models
 
 
 
+        //Contains  card info
+        /// <summary>
+        /// Cannot be updated by this record.
+        /// </summary>
+        private Dictionary<string, string> cardData = new Dictionary<string, string>();
+
 
         //Contains Customer data
         private Dictionary<string, string> custData = new Dictionary<string, string>();
@@ -89,6 +95,7 @@ namespace DatabasePrototype.Models
             string custId = data["CID"];
             string ordID = data["OID"];
             string shipID = data["ShipID"];
+            string cardID = data["CardID"];
             
         
             //Query
@@ -115,6 +122,34 @@ namespace DatabasePrototype.Models
 
 
                 custData.Add(colName, (String)val);
+            }
+            //Close the reader, to free the calling SqlCommand that gave us the reader.
+            rowData.Close();
+
+            //Query
+            SqlCommand getCard = new SqlCommand("Select * From StoreCards Where CardID = '" + cardID + "'", _connection);
+
+            //if you get an error here, check your database setup! Ensure you have the latest script pulled from the repo.
+            rowData = getCard.ExecuteReader();
+            rowData.Read(); //Again, we must push it forward one.
+            Logger.LogG(TAG, "Reading Card info for " + custId);
+            for (x = 0; x < rowData.FieldCount; x++)
+            {
+                var colName = rowData.GetName(x);
+                //This should not happen, but just incase of accidental duplicates, we skip them.
+                if (data.ContainsKey(colName))
+                    continue;
+
+                var val = rowData.GetFieldValue<Object>(x);
+                if (val is DateTime)
+                    val = ((DateTime)val).ToString("yyyy-MM-dd");
+                else
+                {
+                    val = val + "";
+                }
+
+
+                cardData.Add(colName, (String)val);
             }
             //Close the reader, to free the calling SqlCommand that gave us the reader.
             rowData.Close();
@@ -250,6 +285,10 @@ namespace DatabasePrototype.Models
             else if (custData.ContainsKey(key))
                 return custData[key];
             //We would continue this pattern here.
+            else if (shipData.ContainsKey(key))
+                return shipData[key];
+            else if (cardData.ContainsKey(key))
+                return cardData[key];
             else
             {
                 return null;
@@ -260,7 +299,7 @@ namespace DatabasePrototype.Models
         {
 
             //TODO:Always change these, to match the record's tables!
-            var _tables = new[] { "Orders","Customers", "OrderInformation", "ShippingAddress" };
+            var _tables = new[] { "Orders","Customers", "OrderInformation", "ShippingAddress","StoreCards" };
 
             //So let's begin with the final part, building the base query. 
             //For generification reasons, the query will pull fields from the map, which can be updated from the GUI via SetField()
@@ -313,6 +352,22 @@ namespace DatabasePrototype.Models
 
             //Add where
             queryBuilder.Append("Where ShipID = '" + data["ShipID"] + "'"); //Don't FoRgEt the ' !
+
+            _rawQuery = _rawQuery + Environment.NewLine + queryBuilder;
+            _rawQuery = _rawQuery.Remove(_rawQuery.LastIndexOf(",", StringComparison.Ordinal), 1);
+            queryBuilder.Clear();
+
+            //Build  query, to update Card Data
+            queryBuilder.Append("Update " + _tables[4] + " Set ");
+
+            //parse the dictionary into sql.
+            foreach (KeyValuePair<string, string> pair in cardData)
+            {
+                queryBuilder.Append((string)(pair.Key + " = '" + pair.Value + "' , ")); //Don't forget the ' 
+            }
+
+            //Add where
+            queryBuilder.Append("Where CardID = '" + data["CardID"] + "'"); //Don't FoRgEt the ' !
 
             _rawQuery = _rawQuery + Environment.NewLine + queryBuilder;
             _rawQuery = _rawQuery.Remove(_rawQuery.LastIndexOf(",", StringComparison.Ordinal), 1);

@@ -185,7 +185,7 @@ namespace DatabasePrototype.Models
 
             queryBuilder.Clear(); //clear the strBuilder
 
-            //Build second query, to update contacts
+            //Build second query, to update card data
             queryBuilder.Append("Update " + _tables[1] + " Set ");
 
             //parse the dictionary into sql.
