@@ -488,7 +488,15 @@ namespace DatabasePrototype
 
                         if (CustomersFilterOptionBar.IsEnabled && CustomersFilterOptionBar.Text.Length > 0)
                         {
-                            filterStatement = " And " + filterByChoice + " = '" + CustomersFilterOptionBar.Text + "'";
+                            if ((bool)CustomersWildCardCheckBox.IsChecked)
+                            {
+                                filterStatement = " And " + filterByChoice + " like '" + EmployeesFilterOptionBar.Text + "%'";
+                            }
+
+                            else
+                            {
+                                filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
+                            }
                         }
 
 
@@ -805,7 +813,15 @@ namespace DatabasePrototype
 
                     if (FilterOptionBar.IsEnabled && FilterOptionBar.Text.Length > 0)
                     {
-                        filterStatement = " And " + filterByChoice + " = '" + FilterOptionBar.Text + "'";
+                        if ((bool)OrdersWildCardCheckBox.IsChecked)
+                        {
+                            filterStatement = " And " + filterByChoice + " like '" + EmployeesFilterOptionBar.Text + "%'";
+                        }
+
+                        else
+                        {
+                            filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
+                        }
                     }
 
                     if (FilterOptionBar.IsEnabled && FilterOptionBar.Text.Length > 0
