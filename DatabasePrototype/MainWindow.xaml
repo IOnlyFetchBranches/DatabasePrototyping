@@ -83,6 +83,7 @@
                                     <ComboBoxItem Content="Zip"/>
                                 </ComboBox>
                                 <Label x:Name="a" Content="Search By" HorizontalAlignment="Left" Margin="103,74.07,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
+                                <CheckBox x:Name="StoresWildCardCheckBox" Content="WildCard" HorizontalAlignment="Left" Margin="123,134.8,0,0" VerticalAlignment="Top" Width="103" Foreground="#FFFAFAFA" Grid.Row="1"/>
                             </Grid>
                         </TabItem>
 
@@ -169,6 +170,7 @@
                                 <Label x:Name="EmployeesLabelSearchBy" Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" />
                                 <TextBox x:Name="EmployeesFilterOptionBar" Height="26" Margin="260,184,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Segoe UI Emoji" Background="#FFFAFAFA" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" UndoLimit="98" />
                                 <CheckBox x:Name="EmployeesCheckBoxIsDesc" Content="DESC" HorizontalAlignment="Left" Margin="22,215,0,0" VerticalAlignment="Top" Width="63" Foreground="#FFFAFAFA"/>
+                                <CheckBox x:Name="EmployeesWildCardCheckBox" Content="WildCard" HorizontalAlignment="Left" Margin="123,218,0,0" VerticalAlignment="Top" Width="103" Foreground="#FFFAFAFA"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -247,6 +249,7 @@
                                     <ComboBoxItem Content="Cell Phone"/>
                                 </ComboBox>
                                 <Label x:Name="a1" Content="Search By" HorizontalAlignment="Left" Margin="103,157,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA"/>
+                                <CheckBox x:Name="CustomersWildCardCheckBox" Content="WildCard" HorizontalAlignment="Left" Margin="123,218,0,0" VerticalAlignment="Top" Width="103" Foreground="#FFFAFAFA"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -352,6 +355,7 @@
                                     <ComboBoxItem Content="Total"/>
                                     <ComboBoxItem Content="Quantity"/>
                                 </ComboBox>
+                                <CheckBox x:Name="OrdersWildCardCheckBox" Content="WildCard" HorizontalAlignment="Left" Margin="123,218,0,0" VerticalAlignment="Top" Width="103" Foreground="#FFFAFAFA"/>
                             </Grid>
                             <!--Internal Code for this section's home tab goes after here -->
 

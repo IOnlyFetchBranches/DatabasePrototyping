@@ -213,7 +213,15 @@ namespace DatabasePrototype
 
                     if (EmployeesFilterOptionBar.IsEnabled && EmployeesFilterOptionBar.Text.Length > 0)
                     {
-                        filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
+                        if ((bool)EmployeesWildCardCheckBox.IsChecked)
+                        {
+                            filterStatement = " And " + filterByChoice + " like '" + EmployeesFilterOptionBar.Text + "%'";
+                        }
+
+                        else
+                        {
+                            filterStatement = " And " + filterByChoice + " = '" + EmployeesFilterOptionBar.Text + "'";
+                        }
                     }
 
 
@@ -222,7 +230,15 @@ namespace DatabasePrototype
                     if (sanitizedText.Length > 0)
                         //If the user has followed the default search logic
                         //(Type info in search bar, choose search by =>{Whatever else}
+                    if ((bool)EmployeesWildCardCheckBox.IsChecked)
+                    {
+                        whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " + filterStatement;
+                    }
+
+                        else
+                    {
                         whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                    }
                     else if (sanitizedText.Length == 0 && filterStatement != "")
                     {
                         //If the user wants all users that match a given filter, then type the filter in the option bar
@@ -477,9 +493,16 @@ namespace DatabasePrototype
                         string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
                         if (sanitizedText.Length > 0)
-                            //If the user has followed the default search logic
-                            //(Type info in search bar, choose search by =>{Whatever else}
+                     
+                        if ((bool)CustomersWildCardCheckBox.IsChecked)
+                        {
+                            whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " + filterStatement;
+                        }
+
+                        else
+                        {
                             whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                        }
                         else if (sanitizedText.Length == 0 && filterStatement != "")
                         {
                             //If the user wants all users that match a given filter, then type the filter in the option bar
@@ -808,9 +831,16 @@ namespace DatabasePrototype
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
                     if (sanitizedText.Length > 0)
-                        //If the user has followed the default search logic
-                        //(Type info in search bar, choose search by =>{Whatever else}
-                        whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+
+                        if ((bool)OrdersWildCardCheckBox.IsChecked)
+                        {
+                            whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " + filterStatement;
+                        }
+
+                        else
+                        {
+                            whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                        }
                     else if (sanitizedText.Length == 0 && filterStatement != "")
                     {
                         //If the user wants all users that match a given filter, then type the filter in the option bar
