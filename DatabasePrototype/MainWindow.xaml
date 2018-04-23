@@ -77,10 +77,10 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                     <ComboBoxItem/>
-                                    <ComboBoxItem Content="StoreID"/>
-                                    <ComboBoxItem Content="State"/>
-                                    <ComboBoxItem Content="City"/>
-                                    <ComboBoxItem Content="Zip"/>
+                                    <ComboBoxItem Content="STRID"/>
+                                    <ComboBoxItem Content="SState"/>
+                                    <ComboBoxItem Content="SCity"/>
+                                    <ComboBoxItem Content="SZip"/>
                                 </ComboBox>
                                 <Label x:Name="a" Content="Search By" HorizontalAlignment="Left" Margin="103,74.07,0,0" VerticalAlignment="Top" Width="63" FontFamily="Segoe UI Emoji" FontWeight="Bold" Foreground="#FFFAFAFA" Grid.Row="1"/>
                                 <CheckBox x:Name="StoresWildCardCheckBox" Content="WildCard" HorizontalAlignment="Left" Margin="123,134.8,0,0" VerticalAlignment="Top" Width="103" Foreground="#FFFAFAFA" Grid.Row="1"/>

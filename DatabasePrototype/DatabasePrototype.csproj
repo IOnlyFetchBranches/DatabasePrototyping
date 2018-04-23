@@ -61,6 +61,7 @@
     <Compile Include="Models\InventoryResult.cs" />
     <Compile Include="Models\OrderDataRecord.cs" />
     <Compile Include="Models\OrderResult.cs" />
+    <Compile Include="Models\StoreResult.cs" />
     <Compile Include="Windows\CustomerDataWindow.xaml.cs">
       <DependentUpon>CustomerDataWindow.xaml</DependentUpon>
     </Compile>
