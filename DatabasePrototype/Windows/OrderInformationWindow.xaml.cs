@@ -48,18 +48,22 @@ namespace DatabasePrototype.Windows
             var nameCol = new GridViewColumn();
             //This sets the field this column will get data from
             nameCol.DisplayMemberBinding = new Binding("ItemName");
+            nameCol.Header = "Item";
 
             var quantityCol = new GridViewColumn();
             //This sets the field this column will get data from
             quantityCol.DisplayMemberBinding = new Binding("Quantity");
+            quantityCol.Header = "Quantity";
 
             var priceCol = new GridViewColumn();
             //This sets the field this column will get data from
             priceCol.DisplayMemberBinding = new Binding("ItemPrice");
+            priceCol.Header = "Item Price";
 
             var returnCol = new GridViewColumn();
             //This sets the field this column will get data from
             returnCol.DisplayMemberBinding = new Binding("IsReturned");
+            returnCol.Header = "Returned?";
 
 
 
@@ -78,7 +82,30 @@ namespace DatabasePrototype.Windows
             //Add gridView to list
             resultContainer.View = resultGrid;
 
-            
+
+            //Set onclick
+            resultContainer.MouseDoubleClick += (sender, args) =>
+            {
+                var item = (LineItem)resultContainer.SelectedItem;
+                //Open a connection to the DB
+                var connection = ConnectionManager.OpenLast();
+                try
+                {
+                    //Set selected item data
+                    OrderItemDesc.Text = item.GetField("Description");
+                    OrderItemID.Text = item.GetField("ItemID");
+                }
+                catch (NullReferenceException nre)
+                {
+                    //The system will throw a nre if the user clicks on the header, issue that should be addressed
+
+                }
+
+
+            };
+
+
+
 
 
 
