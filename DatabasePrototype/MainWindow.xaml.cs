@@ -1477,16 +1477,32 @@ namespace DatabasePrototype
 
                     if (StoresFilterOptionBar.IsEnabled && StoresFilterOptionBar.Text.Length > 0)
                     {
-                        filterStatement = " And " + filterByChoice + " = '" + StoresFilterOptionBar.Text + "'";
+                        if ((bool)StoresWildCardCheckBox.IsChecked)
+                        {
+                            filterStatement = " And " + filterByChoice + " like '" + StoresFilterOptionBar.Text + "%'";
+                        }
+
+                        else
+                        {
+                            filterStatement = " And " + filterByChoice + " = '" + StoresFilterOptionBar.Text + "'";
+                        }
                     }
 
 
                     string whereStatement = ""; //We'll use conditional logic to formulate this value, then pass it through to our query.
 
                     if (sanitizedText.Length > 0)
-                        //If the user has followed the default search logic
-                        //(Type info in search bar, choose search by =>{Whatever else}
-                        whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " + filterStatement;
+                        if ((bool)StoresWildCardCheckBox.IsChecked)
+                        {
+                            whereStatement = "Where " + searchByChoice + " like '" + sanitizedText + "%' " +
+                                             filterStatement;
+                        }
+
+                        else
+                        {
+                            whereStatement = "Where " + searchByChoice + " = '" + sanitizedText + "' " +
+                                             filterStatement;
+                        }
                     else if (sanitizedText.Length == 0 && filterStatement != "")
                     {
                         //If the user wants all users that match a given filter, then type the filter in the option bar
