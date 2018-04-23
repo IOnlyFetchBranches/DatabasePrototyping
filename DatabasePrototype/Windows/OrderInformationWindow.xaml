@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DatabasePrototype.Windows"
         mc:Ignorable="d"
-        Title="Order Details" Height="300" Width="300">
+        Title="Order Details" Height="350" Width="450">
     <Grid>
-        <Label Content="Line Information" HorizontalAlignment="Left" Margin="97,11,0,0" VerticalAlignment="Top" Height="32" Width="102"/>
-        <Label Content="ItemID" HorizontalAlignment="Left" Margin="18,45,0,0" VerticalAlignment="Top"/>
-        <Label Content="Description" HorizontalAlignment="Left" Margin="13,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.167,0.883"/>
-        <TextBox x:Name="OrderItemID" HorizontalAlignment="Left" Height="23" Margin="97,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="OrderItemDesc" HorizontalAlignment="Left" Height="39" Margin="96,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ListView x:Name="OrderLineList" HorizontalAlignment="Left" Height="100" Margin="13,129,0,0" VerticalAlignment="Top" Width="263">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="177*"/>
+            <ColumnDefinition Width="148*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Line Information" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Height="32" Width="102" Grid.ColumnSpan="2"/>
+        <Label Content="ItemID" HorizontalAlignment="Left" Margin="65,42,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description" HorizontalAlignment="Left" Margin="60,87,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.167,0.883"/>
+        <TextBox x:Name="OrderItemID" HorizontalAlignment="Left" Height="23" Margin="144,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218" Grid.ColumnSpan="2" Focusable="False"/>
+        <TextBox x:Name="OrderItemDesc" HorizontalAlignment="Left" Height="39" Margin="143,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" Focusable="False"/>
+        <ListView x:Name="OrderLineList" HorizontalAlignment="Left" Height="157" Margin="13,129,0,0" VerticalAlignment="Top" Width="415" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
